@@ -13,6 +13,7 @@ import spark.template.velocity.*;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 import handlers.DepartamentoHandler;
+import handlers.HomeHandler;
 
 public class App {
   public static void main(String args[]){
@@ -51,15 +52,15 @@ public class App {
 			return "Conxión OK";
 		});	
 		//rutas a handlers
-		//get("/", HomeHandler.index);
+		get("/", HomeHandler.index);
 		get("/departamento/listar", DepartamentoHandler.listar);
 		//post("/departamento/guardar", DepartamentoHandler.guardar);
   }
 
   public static String renderTemplate(String template, Map model) {
 		//usar velocity como motor de templates
-    Config constants = ConfigFactory.parseResources("config/application.conf");
-		model.put("constantes", constants);
+    Config constants = ConfigFactory.parseResources("configs/application.conf");
+		model.put("constants", constants);
 		VelocityTemplateEngine vt = new VelocityTemplateEngine();
 		ModelAndView mv = new ModelAndView(model, template);		
 		String rptaLatin = vt.render(mv);

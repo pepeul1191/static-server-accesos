@@ -4,10 +4,8 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 import org.json.JSONObject;
-import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 import configs.Database;
 import models.Departamento;
 
