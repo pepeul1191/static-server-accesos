@@ -12,6 +12,7 @@ import spark.ModelAndView;
 import spark.template.velocity.*;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
+import handlers.DepartamentoHandler;
 
 public class App {
   public static void main(String args[]){
@@ -51,8 +52,8 @@ public class App {
 		});	
 		//rutas a handlers
 		//get("/", HomeHandler.index);
-		//get("/departamento/listar", DepartamentoHanlder.listar);
-		//post("/departamento/guardar", DepartamentoHanlder.guardar);
+		get("/departamento/listar", DepartamentoHandler.listar);
+		//post("/departamento/guardar", DepartamentoHandler.guardar);
   }
 
   public static String renderTemplate(String template, Map model) {
