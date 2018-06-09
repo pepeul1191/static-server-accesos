@@ -8,20 +8,22 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import configs.Database;
-import models.Departamento;
+import models.Distrito;
+import models.VWDistritoProvinciaDepartamento;
 
-public class DepartamentoHandler{
+public class DistritoHandler{
   public static Route listar = (Request request, Response response) -> {
     String rpta = "";
+    int provinciaId = Integer.parseInt(request.params(":provincia_id"));
     Database db = new Database();
     try {
       List<JSONObject> rptaTemp = new ArrayList<JSONObject>();
       db.open();
-      List<Departamento> rptaList = Departamento.findAll();
-      for (Departamento departamento : rptaList) {
+      List<Distrito> rptaList = Distrito.find("provincia_id = ?", provinciaId);
+      for (Distrito Distrito : rptaList) {
         JSONObject obj = new JSONObject();
-        obj.put("id", departamento.get("id"));
-        obj.put("nombre", departamento.get("nombre"));
+        obj.put("id", Distrito.get("id"));
+        obj.put("nombre", Distrito.get("nombre"));
         rptaTemp.add(obj);
       }
       rpta = rptaTemp.toString();
@@ -38,6 +40,35 @@ public class DepartamentoHandler{
     return rpta;
   };
 
+  public static Route buscar = (Request request, Response response) -> {
+    String rpta = "";
+    Database db = new Database();
+    try {
+      List<JSONObject> rptaTemp = new ArrayList<JSONObject>();
+      db.open();
+      String query = "nombre LIKE '" + request.queryParams("nombre")+ "%'";
+      List<VWDistritoProvinciaDepartamento> rptaList = VWDistritoProvinciaDepartamento.where(query).limit(10);
+      for (VWDistritoProvinciaDepartamento distrito : rptaList) {
+        JSONObject obj = new JSONObject();
+        obj.put("id", distrito.get("id"));
+        obj.put("nombre", distrito.get("nombre"));
+        rptaTemp.add(obj);
+      }
+      rpta = rptaTemp.toString();
+    }catch (Exception e) {
+      String[] error = {"Se ha producido un error en  listar la búsqueda", e.toString()};
+      JSONObject rptaTry = new JSONObject();
+      rptaTry.put("tipo_mensaje", "error");
+      rptaTry.put("mensaje", error);
+      rpta = rptaTry.toString();
+      response.status(500);
+    } finally {
+      db.close();
+    }
+    return rpta;
+  };
+
+  /*
   public static Route guardar = (Request request, Response response) -> {
     String rpta = "";
     JSONObject data = new JSONObject(request.queryParams("data"));
@@ -53,10 +84,10 @@ public class DepartamentoHandler{
       db.getDb().openTransaction();
       if(nuevos.length() > 0){
         for (int i = 0; i < nuevos.length(); i++) {
-          JSONObject departamento = nuevos.getJSONObject(i);
-          String antiguoId = departamento.getString("id");
-          String nombre = departamento.getString("nombre");
-          Departamento n = new Departamento();
+          JSONObject Distrito = nuevos.getJSONObject(i);
+          String antiguoId = Distrito.getString("id");
+          String nombre = Distrito.getString("nombre");
+          Distrito n = new Distrito();
           n.set("nombre", nombre);
           n.saveIt();
           int nuevoId = (int) n.get("id"); 
@@ -68,11 +99,11 @@ public class DepartamentoHandler{
       }
       if(editados.length() > 0){
         for (int i = 0; i < editados.length(); i++) {
-          JSONObject departamento = editados.getJSONObject(i);
-          int id = departamento.getInt("id");
-          String nombre = departamento.getString("nombre");
+          JSONObject Distrito = editados.getJSONObject(i);
+          int id = Distrito.getInt("id");
+          String nombre = Distrito.getString("nombre");
           //Employee e = Employee.findFirst("first_name = ?", "John");
-          Departamento e = Departamento.findFirst("id = ?", id);
+          Distrito e = Distrito.findFirst("id = ?", id);
           e.set("nombre", nombre);
           e.saveIt();
         }
@@ -80,7 +111,7 @@ public class DepartamentoHandler{
       if(eliminados.length() > 0){
         for (Object eliminado : eliminados) {
           int eleminadoId = (Integer)eliminado;
-          Departamento d = Departamento.findFirst("id = ?", eleminadoId);
+          Distrito d = Distrito.findFirst("id = ?", eleminadoId);
           d.delete();
         }
       }
@@ -92,13 +123,13 @@ public class DepartamentoHandler{
       db.close();
     }
     if(error){
-      String[] cuerpoMensaje = {"Se ha producido un error en  guardar los departamento", execption};
+      String[] cuerpoMensaje = {"Se ha producido un error en  guardar los Distrito", execption};
       JSONObject rptaMensaje = new JSONObject();
       rptaMensaje.put("tipo_mensaje", "error");
       rptaMensaje.put("mensaje", cuerpoMensaje);
       rpta = rptaMensaje.toString();
     }else{
-      String[] cuerpoMensaje = {"Se ha registrado los cambios en los departamentos", listJSONNuevos.toString()};
+      String[] cuerpoMensaje = {"Se ha registrado los cambios en los Distritos", listJSONNuevos.toString()};
       JSONObject rptaMensaje = new JSONObject();
       rptaMensaje.put("tipo_mensaje", "success");
       rptaMensaje.put("mensaje", cuerpoMensaje);
@@ -106,4 +137,5 @@ public class DepartamentoHandler{
     }
     return rpta;
   };
+  */
 }

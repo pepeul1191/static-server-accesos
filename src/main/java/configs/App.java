@@ -14,6 +14,7 @@ import spark.template.velocity.*;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 import handlers.DepartamentoHandler;
+import handlers.DistritoHandler;
 import handlers.HomeHandler;
 
 public class App {
@@ -56,6 +57,9 @@ public class App {
 		get("/", HomeHandler.index);
 		get("/departamento/listar", DepartamentoHandler.listar);
 		post("/departamento/guardar", DepartamentoHandler.guardar);
+		get("/distrito/listar/:provincia_id", DistritoHandler.listar);
+		get("/distrito/buscar", DistritoHandler.buscar);
+		//post("/distrito/guardar", DistritoHandler.guardar);
   }
 
   public static String renderTemplate(String template, Map model) {

@@ -47,16 +47,16 @@ def guardar
           :editados => [
             {
               :id => '1',
-              :nombre => 'Amazonasssss',  
+              :nombre => 'Amazonas',  
               :pais_id => 2,
             },
             {
               :id => '2',
-              :nombre => 'Ancsjjjj',  
+              :nombre => 'Ancsh',  
               :pais_id => 2,
             },
           ],  
-          :eliminados => [7],
+          :eliminados => [26,27],
           :extra => {
             :campo_id => 20
           }
