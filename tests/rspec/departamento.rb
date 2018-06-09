@@ -65,6 +65,9 @@ def guardar
         test = App.new(url)
         test.post()
         expect(test.response.code).to eq(200)
+        if (test.response.code != 500)
+          puts test.response.body
+        end
         expect(test.response.body).not_to include('error')
         expect(test.response.body).to include('Se ha registrado los cambios en los departamentos')
         expect(test.response.body).to include('nuevo_id')
