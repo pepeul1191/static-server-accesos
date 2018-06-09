@@ -12,6 +12,10 @@ Ejecutar Main Class usando Maven:
 
     $ mvn clean && mvn install && mvn exec:java -Dexec.mainClass="configs.App"
 
+Migraciones:
+
+    $ mvn db-migrator:new -Dname=create_sistemas
+
 --- 
 
 Fuentes

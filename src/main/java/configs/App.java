@@ -55,7 +55,7 @@ public class App {
 			return "Conxión OK";
 		});	
 		//rutas a handlers
-		get("/", HomeHandler.index);
+		get("/accesos", HomeHandler.index);
 		get("/departamento/listar", DepartamentoHandler.listar);
 		post("/departamento/guardar", DepartamentoHandler.guardar);
 		get("/distrito/listar/:provincia_id", DistritoHandler.listar);

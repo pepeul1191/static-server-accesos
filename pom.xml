@@ -87,8 +87,26 @@
           <target>1.8</target>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.javalite</groupId>
+        <artifactId>db-migrator-maven-plugin</artifactId>
+        <version>1.4.13</version>
+        <configuration>
+          <driver>org.sqlite.JDBC</driver>
+          <url>jdbc:sqlite:./db/accesos.db</url>
+          <username>user</username>
+          <password>pass</password>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>3.18.0</version>
+          </dependency>	
+        </dependencies>
+      </plugin>
     </plugins>
-    <!--Recursos a compi -->
+    <!--Recursos a compilación -->
     <resources>
       <resource>
         <directory>src/main/java</directory>

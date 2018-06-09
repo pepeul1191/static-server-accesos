@@ -18,9 +18,12 @@ public class HomeHandler {
     model.put("partial", "templates/home/index.vm");
     model.put("title", "Home");
     model.put("constants", constants);
+    model.put("modulos", "[{\"url\":\"accesos\",\"nombre\":\"Accesos\"}]");
+    model.put("items", "[{\"subtitulo\":\"Opciones\",\"items\":[{\"item\":\"Gestion de Sistemas\",\"url\":\"accesos/#/sistema\"},{\"item\":\"Gestion de Usuarios\",\"url\":\"accesos/#/usuario\"}]}]");
+    model.put("data", "{\"modulo\":\"Accesos\"}");
     model.put("load_css", helper.indexCSS());
     model.put("load_js", helper.indexJS());
-    return App.renderTemplate("templates/layouts/blank.vm", model);
+    return App.renderTemplate("templates/layouts/app.vm", model);
   };
 }
 
