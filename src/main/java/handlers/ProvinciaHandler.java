@@ -41,23 +41,23 @@ public class ProvinciaHandler{
 
   public static Route guardar = (Request request, Response response) -> {
     String rpta = "";
-    JSONObject data = new JSONObject(request.queryParams("data"));
-    JSONArray nuevos = data.getJSONArray("nuevos");
-    JSONArray editados = data.getJSONArray("editados");
-    JSONArray eliminados = data.getJSONArray("eliminados");
-    int departamentoId = data.getJSONObject("extra").getInt("departamento_id");
     List<JSONObject> listJSONNuevos = new ArrayList<JSONObject>();
     boolean error = false;
     String execption = "";
     Database db = new Database();
     try {
+      JSONObject data = new JSONObject(request.queryParams("data"));
+      JSONArray nuevos = data.getJSONArray("nuevos");
+      JSONArray editados = data.getJSONArray("editados");
+      JSONArray eliminados = data.getJSONArray("eliminados");
+      int departamentoId = data.getJSONObject("extra").getInt("departamento_id");
       db.open();
       db.getDb().openTransaction();
       if(nuevos.length() > 0){
         for (int i = 0; i < nuevos.length(); i++) {
-          JSONObject Provincia = nuevos.getJSONObject(i);
-          String antiguoId = Provincia.getString("id");
-          String nombre = Provincia.getString("nombre");
+          JSONObject provincia = nuevos.getJSONObject(i);
+          String antiguoId = provincia.getString("id");
+          String nombre = provincia.getString("nombre");
           Provincia n = new Provincia();
           n.set("nombre", nombre);
           n.set("departamento_id", departamentoId);
@@ -93,10 +93,12 @@ public class ProvinciaHandler{
       db.getDb().commitTransaction();
     }catch (Exception e) {
       error = true;
-      e.printStackTrace();
+      //e.printStackTrace();
       execption = e.toString();
     } finally {
-      db.close();
+      if(db.getDb().hasConnection()){
+        db.close();
+      }
     }
     if(error){
       String[] cuerpoMensaje = {"Se ha producido un error en  guardar las provincias", execption};

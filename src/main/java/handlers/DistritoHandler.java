@@ -68,27 +68,28 @@ public class DistritoHandler{
     return rpta;
   };
 
-  /*
   public static Route guardar = (Request request, Response response) -> {
     String rpta = "";
-    JSONObject data = new JSONObject(request.queryParams("data"));
-    JSONArray nuevos = data.getJSONArray("nuevos");
-    JSONArray editados = data.getJSONArray("editados");
-    JSONArray eliminados = data.getJSONArray("eliminados");
     List<JSONObject> listJSONNuevos = new ArrayList<JSONObject>();
     boolean error = false;
     String execption = "";
     Database db = new Database();
     try {
+      JSONObject data = new JSONObject(request.queryParams("data"));
+      JSONArray nuevos = data.getJSONArray("nuevos");
+      JSONArray editados = data.getJSONArray("editados");
+      JSONArray eliminados = data.getJSONArray("eliminados");
+      int provinciaId = data.getJSONObject("extra").getInt("provincia_id");
       db.open();
       db.getDb().openTransaction();
       if(nuevos.length() > 0){
         for (int i = 0; i < nuevos.length(); i++) {
-          JSONObject Distrito = nuevos.getJSONObject(i);
-          String antiguoId = Distrito.getString("id");
-          String nombre = Distrito.getString("nombre");
+          JSONObject distrito = nuevos.getJSONObject(i);
+          String antiguoId = distrito.getString("id");
+          String nombre = distrito.getString("nombre");
           Distrito n = new Distrito();
           n.set("nombre", nombre);
+          n.set("provincia_id", provinciaId);
           n.saveIt();
           int nuevoId = (int) n.get("id"); 
           JSONObject temp = new JSONObject();
@@ -99,37 +100,43 @@ public class DistritoHandler{
       }
       if(editados.length() > 0){
         for (int i = 0; i < editados.length(); i++) {
-          JSONObject Distrito = editados.getJSONObject(i);
-          int id = Distrito.getInt("id");
-          String nombre = Distrito.getString("nombre");
-          //Employee e = Employee.findFirst("first_name = ?", "John");
+          JSONObject distrito = editados.getJSONObject(i);
+          int id = distrito.getInt("id");
+          String nombre = distrito.getString("nombre");
           Distrito e = Distrito.findFirst("id = ?", id);
-          e.set("nombre", nombre);
-          e.saveIt();
+          if(e != null){
+            e.set("nombre", nombre);
+            e.saveIt();
+          }
         }
       }
       if(eliminados.length() > 0){
         for (Object eliminado : eliminados) {
           int eleminadoId = (Integer)eliminado;
           Distrito d = Distrito.findFirst("id = ?", eleminadoId);
-          d.delete();
+          if(d != null){
+            d.delete();
+          }
         }
       }
       db.getDb().commitTransaction();
     }catch (Exception e) {
       error = true;
+      //e.printStackTrace();
       execption = e.toString();
     } finally {
-      db.close();
+      if(db.getDb().hasConnection()){
+        db.close();
+      }
     }
     if(error){
-      String[] cuerpoMensaje = {"Se ha producido un error en  guardar los Distrito", execption};
+      String[] cuerpoMensaje = {"Se ha producido un error en  guardar los distritos", execption};
       JSONObject rptaMensaje = new JSONObject();
       rptaMensaje.put("tipo_mensaje", "error");
       rptaMensaje.put("mensaje", cuerpoMensaje);
       rpta = rptaMensaje.toString();
     }else{
-      String[] cuerpoMensaje = {"Se ha registrado los cambios en los Distritos", listJSONNuevos.toString()};
+      String[] cuerpoMensaje = {"Se ha registrado los cambios en los distritos", listJSONNuevos.toString()};
       JSONObject rptaMensaje = new JSONObject();
       rptaMensaje.put("tipo_mensaje", "success");
       rptaMensaje.put("mensaje", cuerpoMensaje);
@@ -137,5 +144,4 @@ public class DistritoHandler{
     }
     return rpta;
   };
-  */
 }

@@ -40,15 +40,15 @@ public class DepartamentoHandler{
 
   public static Route guardar = (Request request, Response response) -> {
     String rpta = "";
-    JSONObject data = new JSONObject(request.queryParams("data"));
-    JSONArray nuevos = data.getJSONArray("nuevos");
-    JSONArray editados = data.getJSONArray("editados");
-    JSONArray eliminados = data.getJSONArray("eliminados");
     List<JSONObject> listJSONNuevos = new ArrayList<JSONObject>();
     boolean error = false;
     String execption = "";
     Database db = new Database();
     try {
+      JSONObject data = new JSONObject(request.queryParams("data"));
+      JSONArray nuevos = data.getJSONArray("nuevos");
+      JSONArray editados = data.getJSONArray("editados");
+      JSONArray eliminados = data.getJSONArray("eliminados");
       db.open();
       db.getDb().openTransaction();
       if(nuevos.length() > 0){
@@ -90,7 +90,7 @@ public class DepartamentoHandler{
       db.getDb().commitTransaction();
     }catch (Exception e) {
       error = true;
-      e.printStackTrace();
+      //e.printStackTrace();
       execption = e.toString();
     } finally {
       db.close();
