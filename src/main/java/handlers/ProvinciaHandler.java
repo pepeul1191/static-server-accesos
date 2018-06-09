@@ -8,25 +8,26 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import configs.Database;
-import models.Departamento;
+import models.Provincia;
 
-public class DepartamentoHandler{
+public class ProvinciaHandler{
   public static Route listar = (Request request, Response response) -> {
     String rpta = "";
+    int departamentoId = Integer.parseInt(request.params(":departamento_id"));
     Database db = new Database();
     try {
       List<JSONObject> rptaTemp = new ArrayList<JSONObject>();
       db.open();
-      List<Departamento> rptaList = Departamento.findAll();
-      for (Departamento departamento : rptaList) {
+      List<Provincia> rptaList = Provincia.find("departamento_id = ?", departamentoId);
+      for (Provincia Provincia : rptaList) {
         JSONObject obj = new JSONObject();
-        obj.put("id", departamento.get("id"));
-        obj.put("nombre", departamento.get("nombre"));
+        obj.put("id", Provincia.get("id"));
+        obj.put("nombre", Provincia.get("nombre"));
         rptaTemp.add(obj);
       }
       rpta = rptaTemp.toString();
     }catch (Exception e) {
-      String[] error = {"Se ha producido un error en  listar los departamentos", e.toString()};
+      String[] error = {"Se ha producido un error en  listar las provincias del departamento", e.toString()};
       JSONObject rptaTry = new JSONObject();
       rptaTry.put("tipo_mensaje", "error");
       rptaTry.put("mensaje", error);
@@ -38,6 +39,7 @@ public class DepartamentoHandler{
     return rpta;
   };
 
+  /*
   public static Route guardar = (Request request, Response response) -> {
     String rpta = "";
     JSONObject data = new JSONObject(request.queryParams("data"));
@@ -53,10 +55,10 @@ public class DepartamentoHandler{
       db.getDb().openTransaction();
       if(nuevos.length() > 0){
         for (int i = 0; i < nuevos.length(); i++) {
-          JSONObject departamento = nuevos.getJSONObject(i);
-          String antiguoId = departamento.getString("id");
-          String nombre = departamento.getString("nombre");
-          Departamento n = new Departamento();
+          JSONObject Provincia = nuevos.getJSONObject(i);
+          String antiguoId = Provincia.getString("id");
+          String nombre = Provincia.getString("nombre");
+          Provincia n = new Provincia();
           n.set("nombre", nombre);
           n.saveIt();
           int nuevoId = (int) n.get("id"); 
@@ -68,11 +70,11 @@ public class DepartamentoHandler{
       }
       if(editados.length() > 0){
         for (int i = 0; i < editados.length(); i++) {
-          JSONObject departamento = editados.getJSONObject(i);
-          int id = departamento.getInt("id");
-          String nombre = departamento.getString("nombre");
+          JSONObject Provincia = editados.getJSONObject(i);
+          int id = Provincia.getInt("id");
+          String nombre = Provincia.getString("nombre");
           //Employee e = Employee.findFirst("first_name = ?", "John");
-          Departamento e = Departamento.findFirst("id = ?", id);
+          Provincia e = Provincia.findFirst("id = ?", id);
           e.set("nombre", nombre);
           e.saveIt();
         }
@@ -80,7 +82,7 @@ public class DepartamentoHandler{
       if(eliminados.length() > 0){
         for (Object eliminado : eliminados) {
           int eleminadoId = (Integer)eliminado;
-          Departamento d = Departamento.findFirst("id = ?", eleminadoId);
+          Provincia d = Provincia.findFirst("id = ?", eleminadoId);
           d.delete();
         }
       }
@@ -92,13 +94,13 @@ public class DepartamentoHandler{
       db.close();
     }
     if(error){
-      String[] cuerpoMensaje = {"Se ha producido un error en  guardar los departamento", execption};
+      String[] cuerpoMensaje = {"Se ha producido un error en  guardar los Provincia", execption};
       JSONObject rptaMensaje = new JSONObject();
       rptaMensaje.put("tipo_mensaje", "error");
       rptaMensaje.put("mensaje", cuerpoMensaje);
       rpta = rptaMensaje.toString();
     }else{
-      String[] cuerpoMensaje = {"Se ha registrado los cambios en los departamentos", listJSONNuevos.toString()};
+      String[] cuerpoMensaje = {"Se ha registrado los cambios en los Provincias", listJSONNuevos.toString()};
       JSONObject rptaMensaje = new JSONObject();
       rptaMensaje.put("tipo_mensaje", "success");
       rptaMensaje.put("mensaje", cuerpoMensaje);
@@ -106,4 +108,5 @@ public class DepartamentoHandler{
     }
     return rpta;
   };
+  */
 }

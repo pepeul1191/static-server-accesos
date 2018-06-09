@@ -28,7 +28,7 @@ public class DistritoHandler{
       }
       rpta = rptaTemp.toString();
     }catch (Exception e) {
-      String[] error = {"Se ha producido un error en  listar la búsqueda", e.toString()};
+      String[] error = {"Se ha producido un error en  listar los distritos de la provincia", e.toString()};
       JSONObject rptaTry = new JSONObject();
       rptaTry.put("tipo_mensaje", "error");
       rptaTry.put("mensaje", error);

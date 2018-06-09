@@ -16,6 +16,7 @@ import java.util.Map;
 import handlers.DepartamentoHandler;
 import handlers.DistritoHandler;
 import handlers.HomeHandler;
+import handlers.ProvinciaHandler;
 
 public class App {
   public static void main(String args[]){
@@ -59,6 +60,7 @@ public class App {
 		post("/departamento/guardar", DepartamentoHandler.guardar);
 		get("/distrito/listar/:provincia_id", DistritoHandler.listar);
 		get("/distrito/buscar", DistritoHandler.buscar);
+		get("/provincia/listar/:departamento_id", ProvinciaHandler.listar);
 		//post("/distrito/guardar", DistritoHandler.guardar);
   }
 
