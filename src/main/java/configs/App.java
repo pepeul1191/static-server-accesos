@@ -60,8 +60,9 @@ public class App {
 		post("/departamento/guardar", DepartamentoHandler.guardar);
 		get("/distrito/listar/:provincia_id", DistritoHandler.listar);
 		get("/distrito/buscar", DistritoHandler.buscar);
-		get("/provincia/listar/:departamento_id", ProvinciaHandler.listar);
 		//post("/distrito/guardar", DistritoHandler.guardar);
+		get("/provincia/listar/:departamento_id", ProvinciaHandler.listar);
+		post("/provincia/guardar", ProvinciaHandler.guardar);
   }
 
   public static String renderTemplate(String template, Map model) {

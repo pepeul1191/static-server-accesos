@@ -58,7 +58,7 @@ def guardar
           ],  
           :eliminados => [7],
           :extra => {
-            :campo_id => 20
+            :departamento_id => 20
           }
         }.to_json
         url = 'provincia/guardar?data=' + data

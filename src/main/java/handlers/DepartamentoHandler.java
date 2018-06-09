@@ -71,22 +71,26 @@ public class DepartamentoHandler{
           JSONObject departamento = editados.getJSONObject(i);
           int id = departamento.getInt("id");
           String nombre = departamento.getString("nombre");
-          //Employee e = Employee.findFirst("first_name = ?", "John");
           Departamento e = Departamento.findFirst("id = ?", id);
-          e.set("nombre", nombre);
-          e.saveIt();
+          if(e != null){
+            e.set("nombre", nombre);
+            e.saveIt();
+          }
         }
       }
       if(eliminados.length() > 0){
         for (Object eliminado : eliminados) {
           int eleminadoId = (Integer)eliminado;
           Departamento d = Departamento.findFirst("id = ?", eleminadoId);
-          d.delete();
+          if(d != null){
+            d.delete();
+          }
         }
       }
       db.getDb().commitTransaction();
     }catch (Exception e) {
       error = true;
+      e.printStackTrace();
       execption = e.toString();
     } finally {
       db.close();

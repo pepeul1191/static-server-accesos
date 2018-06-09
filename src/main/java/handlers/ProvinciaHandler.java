@@ -39,13 +39,13 @@ public class ProvinciaHandler{
     return rpta;
   };
 
-  /*
   public static Route guardar = (Request request, Response response) -> {
     String rpta = "";
     JSONObject data = new JSONObject(request.queryParams("data"));
     JSONArray nuevos = data.getJSONArray("nuevos");
     JSONArray editados = data.getJSONArray("editados");
     JSONArray eliminados = data.getJSONArray("eliminados");
+    int departamentoId = data.getJSONObject("extra").getInt("departamento_id");
     List<JSONObject> listJSONNuevos = new ArrayList<JSONObject>();
     boolean error = false;
     String execption = "";
@@ -60,6 +60,7 @@ public class ProvinciaHandler{
           String nombre = Provincia.getString("nombre");
           Provincia n = new Provincia();
           n.set("nombre", nombre);
+          n.set("departamento_id", departamentoId);
           n.saveIt();
           int nuevoId = (int) n.get("id"); 
           JSONObject temp = new JSONObject();
@@ -70,37 +71,41 @@ public class ProvinciaHandler{
       }
       if(editados.length() > 0){
         for (int i = 0; i < editados.length(); i++) {
-          JSONObject Provincia = editados.getJSONObject(i);
-          int id = Provincia.getInt("id");
-          String nombre = Provincia.getString("nombre");
-          //Employee e = Employee.findFirst("first_name = ?", "John");
+          JSONObject provincia = editados.getJSONObject(i);
+          int id = provincia.getInt("id");
+          String nombre = provincia.getString("nombre");
           Provincia e = Provincia.findFirst("id = ?", id);
-          e.set("nombre", nombre);
-          e.saveIt();
+          if(e != null){
+            e.set("nombre", nombre);
+            e.saveIt();
+          }
         }
       }
       if(eliminados.length() > 0){
         for (Object eliminado : eliminados) {
           int eleminadoId = (Integer)eliminado;
           Provincia d = Provincia.findFirst("id = ?", eleminadoId);
-          d.delete();
+          if(d != null){
+            d.delete();
+          }
         }
       }
       db.getDb().commitTransaction();
     }catch (Exception e) {
       error = true;
+      e.printStackTrace();
       execption = e.toString();
     } finally {
       db.close();
     }
     if(error){
-      String[] cuerpoMensaje = {"Se ha producido un error en  guardar los Provincia", execption};
+      String[] cuerpoMensaje = {"Se ha producido un error en  guardar las provincias", execption};
       JSONObject rptaMensaje = new JSONObject();
       rptaMensaje.put("tipo_mensaje", "error");
       rptaMensaje.put("mensaje", cuerpoMensaje);
       rpta = rptaMensaje.toString();
     }else{
-      String[] cuerpoMensaje = {"Se ha registrado los cambios en los Provincias", listJSONNuevos.toString()};
+      String[] cuerpoMensaje = {"Se ha registrado los cambios en las provincias", listJSONNuevos.toString()};
       JSONObject rptaMensaje = new JSONObject();
       rptaMensaje.put("tipo_mensaje", "success");
       rptaMensaje.put("mensaje", cuerpoMensaje);
@@ -108,5 +113,4 @@ public class ProvinciaHandler{
     }
     return rpta;
   };
-  */
 }
