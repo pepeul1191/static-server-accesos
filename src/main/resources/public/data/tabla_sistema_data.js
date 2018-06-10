@@ -34,7 +34,7 @@ var dataTablaSistema = {
       estilos: "width: 80px; padding-left: 7px;"
     },
   },
-  tableKeys: ['id', 'nombre', 'version', 'respositorio'],
+  tableKeys: ['id', 'nombre', 'version', 'repositorio'],
   filaBotones: [
     {
       tipo: "i",

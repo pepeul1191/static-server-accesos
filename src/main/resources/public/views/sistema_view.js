@@ -9,7 +9,7 @@ var SistemaView = Backbone.View.extend({
 	events: {
 		// se está usando asignacion dinamica de eventos en el constructor
     //eventos tabla de departamentos
-    "click #tablaSistema > tfoot > tr > td > button.agregar-fila": "agregarFilaAutor",
+    "click #tablaSistema > tfoot > tr > td > button.agregar-fila": "agregarFilaSistema",
 		"click #tablaSistema > tfoot > tr > td > button.guardar-tabla": "guardarTablaSistema",
 		"keyup #tablaSistema > tbody > tr > td > input.text": "inputTextEscribirSistema",
 		"click #tablaSistema > tbody > tr > td > i.quitar-fila": "quitarFilaSistema",

@@ -59,11 +59,11 @@ public class SistemaHandler{
           String antiguoId = sistema.getString("id");
           String nombre = sistema.getString("nombre");
           String version = sistema.getString("version");
-          String respositorio = sistema.getString("respositorio");
+          String repositorio = sistema.getString("repositorio");
           Sistema n = new Sistema();
           n.set("nombre", nombre);
           n.set("version", version);
-          n.set("respositorio", respositorio);
+          n.set("repositorio", repositorio);
           n.saveIt();
           int nuevoId = (int) n.get("id"); 
           JSONObject temp = new JSONObject();
@@ -78,12 +78,12 @@ public class SistemaHandler{
           int id = sistema.getInt("id");
           String nombre = sistema.getString("nombre");
           String version = sistema.getString("version");
-          String respositorio = sistema.getString("respositorio");
+          String repositorio = sistema.getString("repositorio");
           Sistema e = Sistema.findFirst("id = ?", id);
           if(e != null){
             e.set("nombre", nombre);
             e.set("version", version);
-            e.set("respositorio", respositorio);
+            e.set("repositorio", repositorio);
             e.saveIt();
           }
         }
@@ -110,6 +110,7 @@ public class SistemaHandler{
       JSONObject rptaMensaje = new JSONObject();
       rptaMensaje.put("tipo_mensaje", "error");
       rptaMensaje.put("mensaje", cuerpoMensaje);
+      response.status(500);
       rpta = rptaMensaje.toString();
     }else{
       String[] cuerpoMensaje = {"Se ha registrado los cambios en los sistemas", listJSONNuevos.toString()};

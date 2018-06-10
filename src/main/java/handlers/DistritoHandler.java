@@ -135,6 +135,7 @@ public class DistritoHandler{
       rptaMensaje.put("tipo_mensaje", "error");
       rptaMensaje.put("mensaje", cuerpoMensaje);
       rpta = rptaMensaje.toString();
+      response.status(500);
     }else{
       String[] cuerpoMensaje = {"Se ha registrado los cambios en los distritos", listJSONNuevos.toString()};
       JSONObject rptaMensaje = new JSONObject();
