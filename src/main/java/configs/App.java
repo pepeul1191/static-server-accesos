@@ -8,15 +8,13 @@ import static spark.Spark.port;
 import static spark.Spark.options;
 import static spark.Spark.before;
 import static spark.Spark.get;
-import static spark.Spark.post;
+//import static spark.Spark.post;
 import spark.ModelAndView;
 import spark.template.velocity.*;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
-import handlers.DepartamentoHandler;
-import handlers.DistritoHandler;
 import handlers.HomeHandler;
-import handlers.ProvinciaHandler;
+import handlers.SistemaHandler;
 
 public class App {
   public static void main(String args[]){
@@ -56,6 +54,7 @@ public class App {
 		});	
 		//rutas a handlers
 		get("/accesos/", HomeHandler.index);
+		/*
 		get("/departamento/listar", DepartamentoHandler.listar);
 		post("/departamento/guardar", DepartamentoHandler.guardar);
 		get("/distrito/listar/:provincia_id", DistritoHandler.listar);
@@ -63,6 +62,8 @@ public class App {
 		post("/distrito/guardar", DistritoHandler.guardar);
 		get("/provincia/listar/:departamento_id", ProvinciaHandler.listar);
 		post("/provincia/guardar", ProvinciaHandler.guardar);
+		*/
+		get("/sistema/listar", SistemaHandler.listar);
   }
 
   public static String renderTemplate(String template, Map model) {

@@ -15,6 +15,7 @@ Ejecutar Main Class usando Maven:
 Migraciones:
 
     $ mvn db-migrator:new -Dname=create_sistemas
+    $ mvn db-migrator:migrate
 
 --- 
 
