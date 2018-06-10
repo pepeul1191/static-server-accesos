@@ -37,6 +37,10 @@ public class HomeHelper extends ApplicationHelper{
           "bower_components/swp-backbone/views/modal",
           "bower_components/swp-backbone/views/upload",
           "bower_components/swp-backbone/views/autocomplete",
+          "models/sistema",
+          "collections/sistema_collection",
+          "data/tabla_sistema_data",
+          "views/sistema_view",
           "routes/accesos",
         });
       case "produccion":

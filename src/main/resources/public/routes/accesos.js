@@ -1,5 +1,6 @@
 var accesosRouter = Backbone.Router.extend({
   initialize: function() {
+    sistemaView: null
   },
   routes: {
     "": "index",
@@ -19,6 +20,13 @@ var accesosRouter = Backbone.Router.extend({
   },
   default: function() {
     //window.location.href = BASE_URL + "error/access/404";
+  },
+  sistemaIndex: function(){
+    if(this.sistemaView == null){
+      this.sistemaView = new SistemaView();
+    }
+    this.sistemaView.render();
+    this.sistemaView.tablaSistema.listar();
   },
 });
 
