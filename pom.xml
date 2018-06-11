@@ -2,10 +2,10 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>pe.softweb</groupId>
-  <artifactId>ubicaciones</artifactId>
+  <artifactId>accesos</artifactId>
   <packaging>war</packaging>
   <version>1.0-SNAPSHOT</version>
-  <name>ubicaciones Maven Webapp</name>
+  <name>accesos Maven Webapp</name>
   <url>http://maven.apache.org</url>
   <dependencies>
     <dependency>
@@ -61,7 +61,7 @@
     </dependency>
   </dependencies>
   <build>
-    <finalName>ubicaciones</finalName>
+    <finalName>accesos</finalName>
     <plugins>
       <!-- Instrumentacion para usar JavaLite -->
       <plugin>

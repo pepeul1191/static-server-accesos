@@ -51,18 +51,17 @@ public class App {
 		//ruta de test/conexion
 		get("/test/conexion", (request, response) -> {
 			return "Conxión OK";
-		});	
+		});
+		get("/", (request, response) -> {
+			response.status(500);
+			return "Error, URL vacía";
+		});
+		get("/accesos", (request, response) -> {
+			response.redirect("/accesos/");
+			return "";
+		});
 		//rutas a handlers
 		get("/accesos/", HomeHandler.index);
-		/*
-		get("/departamento/listar", DepartamentoHandler.listar);
-		post("/departamento/guardar", DepartamentoHandler.guardar);
-		get("/distrito/listar/:provincia_id", DistritoHandler.listar);
-		get("/distrito/buscar", DistritoHandler.buscar);
-		post("/distrito/guardar", DistritoHandler.guardar);
-		get("/provincia/listar/:departamento_id", ProvinciaHandler.listar);
-		post("/provincia/guardar", ProvinciaHandler.guardar);
-		*/
 		get("/sistema/listar", SistemaHandler.listar);
 		post("/sistema/guardar", SistemaHandler.guardar);
   }
