@@ -90,7 +90,7 @@ public class SistemaHandler{
       }
       if(eliminados.length() > 0){
         for (Object eliminado : eliminados) {
-          int eleminadoId = (Integer)eliminado;
+          String eleminadoId = (String)eliminado;
           Sistema d = Sistema.findFirst("id = ?", eleminadoId);
           if(d != null){
             d.delete();
@@ -100,7 +100,7 @@ public class SistemaHandler{
       db.getDb().commitTransaction();
     }catch (Exception e) {
       error = true;
-      //e.printStackTrace();
+      e.printStackTrace();
       execption = e.toString();
     } finally {
       db.close();
@@ -113,7 +113,9 @@ public class SistemaHandler{
       response.status(500);
       rpta = rptaMensaje.toString();
     }else{
-      String[] cuerpoMensaje = {"Se ha registrado los cambios en los sistemas", listJSONNuevos.toString()};
+      JSONArray cuerpoMensaje =  new JSONArray();
+      cuerpoMensaje.put("Se ha registrado los cambios en los sistemas");
+      cuerpoMensaje.put(listJSONNuevos);
       JSONObject rptaMensaje = new JSONObject();
       rptaMensaje.put("tipo_mensaje", "success");
       rptaMensaje.put("mensaje", cuerpoMensaje);
