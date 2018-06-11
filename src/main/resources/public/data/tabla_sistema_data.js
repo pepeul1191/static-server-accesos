@@ -37,10 +37,31 @@ var dataTablaSistema = {
   tableKeys: ['id', 'nombre', 'version', 'repositorio'],
   filaBotones: [
     {
+      tipo: "href",
+      claseOperacion: "gestionar-menu",
+      clase: "fa-chevron-right",
+      estilos: "padding-left: 10px;",
+      url: BASE_URL + 'accesos/#/sistema/menu/'/*+ sistema_id*/,
+    },
+    {
+      tipo: "href",
+      claseOperacion: "gesionar-permisos",
+      clase: "fa-list",
+      estilos: "padding-left: 10px;",
+      url: BASE_URL + 'accesos/#/sistema/permiso/'/*+ sistema_id*/,
+    },
+    {
+      tipo: "href",
+      claseOperacion: "gestionar-roles",
+      clase: "fa-id-card-o",
+      estilos: "padding-left: 10px;",
+      url: BASE_URL + 'accesos/#/sistema/rol/'/*+ sistema_id*/,
+    },
+    {
       tipo: "i",
       claseOperacion: "quitar-fila",
       clase: "fa-times",
-      estilos: "padding-left: 10px;",
+      estilos: "padding-left: 7px;",
     },
   ],
   collection: new SistemasCollection(),

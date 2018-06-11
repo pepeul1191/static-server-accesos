@@ -40,7 +40,13 @@ public class HomeHelper extends ApplicationHelper{
           "models/sistema",
           "collections/sistema_collection",
           "data/tabla_sistema_data",
+          "data/modal_sistema_menu_data",
+          "data/modal_sistema_permiso_data",
+          "data/modal_sistema_rol_data",
           "views/sistema_view",
+          "views/sistema_menu_view",
+          "views/sistema_permiso_view",
+          "views/sistema_rol_view",
           "routes/accesos",
         });
       case "produccion":
