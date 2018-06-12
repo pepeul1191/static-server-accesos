@@ -79,6 +79,7 @@ public class App {
 		post("/permiso/guardar", PermisoHandler.guardar);
 		get("/rol/listar/:sistema_id", RolHandler.listar);
 		post("/rol/guardar", RolHandler.guardar);
+		get("/rol/permiso/listar/:sistema_id/:rol_id", RolHandler.listarPermisos);
   }
 
   public static String renderTemplate(String template, Map model) {

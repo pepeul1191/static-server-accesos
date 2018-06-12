@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import configs.Database;
 import models.Rol;
+import models.Permiso;
+import models.ViewRolPermiso;;
 
 public class RolHandler{
   public static Route listar = (Request request, Response response) -> {
@@ -115,6 +117,49 @@ public class RolHandler{
       rptaMensaje.put("tipo_mensaje", "success");
       rptaMensaje.put("mensaje", cuerpoMensaje);
       rpta = rptaMensaje.toString();
+    }
+    return rpta;
+  };
+
+  public static Route listarPermisos = (Request request, Response response) -> {
+    String rpta = "";
+    int sistemaId = Integer.parseInt(request.params(":sistema_id"));
+    int rolId = Integer.parseInt(request.params(":rol_id"));
+    Database db = new Database();
+    try {
+      List<JSONObject> rptaTemp = new ArrayList<JSONObject>();
+      db.open();
+      String sql = 
+        "SELECT T.id AS id, T.nombre AS nombre, (CASE WHEN (P.existe = 1) THEN 1 ELSE 0 END) AS existe, T.llave AS llave FROM " +
+        "(" +
+        "SELECT id, nombre, llave, 0 AS existe FROM permisos WHERE sistema_id = ? " +
+        ") T " +
+        "LEFT JOIN " +
+        "(" +
+          "SELECT P.id, P.nombre,  P.llave, 1 AS existe  FROM permisos P " +
+          "INNER JOIN roles_permisos RP ON P.id = RP.permiso_id " +
+          "WHERE RP.rol_id =  ? " +
+        ") P " +
+        "ON T.id = P.id";
+      List<ViewRolPermiso> rptaList = ViewRolPermiso.findBySQL(sql, sistemaId, rolId);
+      for (ViewRolPermiso rolPermiso : rptaList) {
+        JSONObject obj = new JSONObject();
+        obj.put("id", rolPermiso.get("id"));
+        obj.put("nombre", rolPermiso.get("nombre"));
+        obj.put("llave", rolPermiso.get("llave"));
+        obj.put("existe", rolPermiso.get("existe"));
+        rptaTemp.add(obj);
+      }
+      rpta = rptaTemp.toString();
+    }catch (Exception e) {
+      String[] error = {"Se ha producido un error en  listar los permisos del rol", e.toString()};
+      JSONObject rptaTry = new JSONObject();
+      rptaTry.put("tipo_mensaje", "error");
+      rptaTry.put("mensaje", error);
+      rpta = rptaTry.toString();
+      response.status(500);
+    } finally {
+      db.close();
     }
     return rpta;
   };
