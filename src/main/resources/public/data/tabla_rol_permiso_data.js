@@ -26,17 +26,11 @@ var dataTablaRolPermiso = {
       edicion: true,
     },
     filaBotones: {
-      estilos: "width: 80px; padding-left: 7px;"
+      estilos: "display: none;"
     },
   },
-  tableKeys: ['id', 'nombre'],
+  tableKeys: ['id', 'nombre', 'llave'],
   filaBotones: [
-    {
-      tipo: "i",
-      claseOperacion: "ver-permisos",
-      clase: "fa-chevron-right",
-      estilos: "padding-left: 17px;",
-    },
     {
       tipo: "i",
       claseOperacion: "quitar-fila",

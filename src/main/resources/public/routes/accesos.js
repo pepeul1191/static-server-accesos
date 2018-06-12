@@ -64,6 +64,7 @@ var accesosRouter = Backbone.Router.extend({
       limpiarURL(BASE_URL + "rol/listar/" , sistema_id);
     this.sistemaRolView.sistemaId = sistema_id;
     this.sistemaRolView.tablaRol.listar(sistema_id);
+    this.sistemaRolView.tablaRolPermiso.sistemaId = sistema_id;
   },
 });
 
