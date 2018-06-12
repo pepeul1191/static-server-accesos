@@ -19,6 +19,7 @@ import handlers.ModuloHandler;
 import handlers.SubtituloHandler;
 import handlers.ItemHandler;
 import handlers.PermisoHandler;
+import handlers.RolHandler;
 
 public class App {
   public static void main(String args[]){
@@ -76,6 +77,8 @@ public class App {
 		post("/item/guardar", ItemHandler.guardar);
 		get("/permiso/listar/:sistema_id", PermisoHandler.listar);
 		post("/permiso/guardar", PermisoHandler.guardar);
+		get("/rol/listar/:sistema_id", RolHandler.listar);
+		post("/rol/guardar", RolHandler.guardar);
   }
 
   public static String renderTemplate(String template, Map model) {
