@@ -35,7 +35,7 @@ var dataTablaPermiso = {
       tipo: "i",
       claseOperacion: "quitar-fila",
       clase: "fa-times",
-      estilos: "padding-left: 7px;",
+      estilos: "padding-left: 25px;",
     },
   ],
   collection: new PermisosCollection(),
