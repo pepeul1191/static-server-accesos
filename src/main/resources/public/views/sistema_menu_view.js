@@ -51,7 +51,10 @@ var SistemaMenuView = ModalView.extend({
       limpiarURL(BASE_URL + "subtitulo/listar/" , moduloId);
     this.tablaSubtitulo.moduloId = moduloId;
     this.tablaSubtitulo.limpiarBody();
+    this.tablaItem.limpiarBody();
     this.tablaSubtitulo.listar(moduloId);
+    $("#formTableSubtitulo").removeClass("oculto");
+    $("#formTableItem").addClass("oculto");
   },
   //eventos tabla de subtitulos
   inputTextEscribirSubtitulo: function(event){
@@ -74,6 +77,7 @@ var SistemaMenuView = ModalView.extend({
     this.tablaItem.subtituloId = subtituloId;
     this.tablaItem.limpiarBody();
     this.tablaItem.listar(subtituloId);
+    $("#formTableItem").removeClass("oculto");
   },
   //eventos tabla de items
   inputTextEscribirItem: function(event){
