@@ -50,7 +50,10 @@ var accesosRouter = Backbone.Router.extend({
       this.sistemaPermisoView = new SistemaPermisoView(dataSistemaPermisoView);
     }
     this.sistemaPermisoView.render();
-    //this.sistemaPermisoView.tablaModulo.listar();
+    this.sistemaPermisoView.tablaPermiso.urlListar = 
+      limpiarURL(BASE_URL + "permiso/listar/" , sistema_id);
+    this.sistemaPermisoView.sistemaId = sistema_id;
+    this.sistemaPermisoView.tablaPermiso.listar(sistema_id);
   },
   sistemaRol: function(sistema_id){
     if(this.sistemaRolView == null){

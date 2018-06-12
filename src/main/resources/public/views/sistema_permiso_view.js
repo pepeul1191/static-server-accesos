@@ -6,6 +6,7 @@ var SistemaPermisoView = ModalView.extend({
     this.inheritEvents(ModalView);
     // delegación de eventos
     this.delegateEvents();
+    this.tablaPermiso = new TableView(dataTablaModulo);
   },
   events: {
     // se está usando asignacion dinamica de eventos en el constructor
