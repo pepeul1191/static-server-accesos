@@ -58,6 +58,7 @@ public class HomeHelper extends ApplicationHelper{
           "data/tabla_modulo_subtitulo_data",
           "data/tabla_subtitulo_item_data",
           "data/tabla_sistema_rol_data",
+          "data/tabla_rol_permiso_data",
           "views/sistema_view",
           "views/sistema_menu_view",
           "views/sistema_permiso_view",

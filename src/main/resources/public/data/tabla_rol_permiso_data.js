@@ -1,14 +1,14 @@
-var dataTablaRol = {
-  el: "#formTableRol",
-  idTable: "tablaRol",
-  targetMensaje: "mensajeRptaRol",
+var dataTablaRolPermiso = {
+  el: "#formTableRolPermiso",
+  idTable: "tablaRolPermiso",
+  targetMensaje: "mensajeRptaRolPermiso",
   mensajes: {
     errorListarAjax: "Error en listar los datos del servidor",
     errorGuardarAjax: "Error en guardar los datos en el servidor",
     success: "Se cargado guardo los cambios en los autores",
   },
-  urlGuardar: BASE_URL + "rol/guardar",
-  urlListar: BASE_URL + "rol/listar/",
+  urlGuardar: BASE_URL + "rol/permiso/guardar",
+  urlListar: BASE_URL + "rol/permiso/listar/",
   fila: {
     id: { // llave de REST
       tipo: "td_id",
@@ -16,7 +16,12 @@ var dataTablaRol = {
       edicion: false,
     },
     nombre: { // llave de REST
-      tipo: "text",
+      tipo: "label",
+      estilos: "width: 200px;",
+      edicion: true,
+    },
+    llave: { // llave de REST
+      tipo: "label",
       estilos: "width: 200px;",
       edicion: true,
     },
@@ -39,6 +44,6 @@ var dataTablaRol = {
       estilos: "padding-left: 10px;",
     },
   ],
-  collection: new RolesCollection(),
-  model: "Rol",
+  collection: new PermisosCollection(),
+  model: "Permiso",
 };
