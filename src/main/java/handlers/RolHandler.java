@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import configs.Database;
 import models.Rol;
-import models.Permiso;
-import models.ViewRolPermiso;;
+import models.ViewRolPermiso;
+import models.RolPermiso;
 
 public class RolHandler{
   public static Route listar = (Request request, Response response) -> {
@@ -163,4 +163,63 @@ public class RolHandler{
     }
     return rpta;
   };
+
+  public static Route guardarPermisos = (Request request, Response response) -> {
+    String rpta = "";
+    boolean error = false;
+    String execption = "";
+    Database db = new Database();
+    try {
+      JSONObject data = new JSONObject(request.queryParams("data"));
+      JSONArray editados = data.getJSONArray("editados");
+      int rolId = data.getJSONObject("extra").getInt("rol_id");
+      db.open();
+      db.getDb().openTransaction();
+      if(editados.length() > 0){
+        for (int i = 0; i < editados.length(); i++) {
+          JSONObject permiso = editados.getJSONObject(i);
+          int permisoId = permiso.getInt("id");
+          int existe = permiso.getInt("existe");
+          RolPermiso e = RolPermiso.findFirst("rol_id = ? AND permiso_id = ?", rolId, permisoId);
+          if (existe == 0){//borrar si existe
+            if(e != null){
+              e.delete();
+            }
+          }else if(existe == 1){//crear si no existe
+            if(e == null){
+              RolPermiso n = new RolPermiso();
+              n.set("permiso_id", permisoId);
+              n.set("rol_id", rolId);
+              n.saveIt();
+            }
+          }
+        }
+      }
+      db.getDb().commitTransaction();
+    }catch (Exception e) {
+      error = true;
+      e.printStackTrace();
+      execption = e.toString();
+    } finally {
+      if(db.getDb().hasConnection()){
+        db.close();
+      }
+    }
+    if(error){
+      String[] cuerpoMensaje = {"Se ha producido un error en asociar los permisos al rol", execption};
+      JSONObject rptaMensaje = new JSONObject();
+      rptaMensaje.put("tipo_mensaje", "error");
+      rptaMensaje.put("mensaje", cuerpoMensaje);
+      response.status(500);
+      rpta = rptaMensaje.toString();
+    }else{
+      JSONArray cuerpoMensaje =  new JSONArray();
+      cuerpoMensaje.put("Se ha registrado la asociación de permisos al rol");
+      JSONObject rptaMensaje = new JSONObject();
+      rptaMensaje.put("tipo_mensaje", "success");
+      rptaMensaje.put("mensaje", cuerpoMensaje);
+      rpta = rptaMensaje.toString();
+    }
+    return rpta;
+  };  
 }
