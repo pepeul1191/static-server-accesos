@@ -8,28 +8,26 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import configs.Database;
-import models.Modulo;
+import models.Subtitulo;;
 
-public class ModuloHandler{
+public class SubtituloHandler{
   public static Route listar = (Request request, Response response) -> {
     String rpta = "";
-    int sistemaId = Integer.parseInt(request.params(":sistema_id"));
+    int moduloId = Integer.parseInt(request.params(":modulo_id"));
     Database db = new Database();
     try {
       List<JSONObject> rptaTemp = new ArrayList<JSONObject>();
       db.open();
-      List<Modulo> rptaList = Modulo.find("sistema_id = ?", sistemaId);
-      for (Modulo modulo : rptaList) {
+      List<Subtitulo> rptaList = Subtitulo.find("modulo_id = ?", moduloId);
+      for (Subtitulo subtitulo : rptaList) {
         JSONObject obj = new JSONObject();
-        obj.put("id", modulo.get("id"));
-        obj.put("nombre", modulo.get("nombre"));
-        obj.put("url", modulo.get("url"));
-        obj.put("icono", modulo.get("icono"));
+        obj.put("id", subtitulo.get("id"));
+        obj.put("nombre", subtitulo.get("nombre"));
         rptaTemp.add(obj);
       }
       rpta = rptaTemp.toString();
     }catch (Exception e) {
-      String[] error = {"Se ha producido un error en  listar los módulos", e.toString()};
+      String[] error = {"Se ha producido un error en  listar los subtítulos", e.toString()};
       JSONObject rptaTry = new JSONObject();
       rptaTry.put("tipo_mensaje", "error");
       rptaTry.put("mensaje", error);
@@ -52,21 +50,17 @@ public class ModuloHandler{
       JSONArray nuevos = data.getJSONArray("nuevos");
       JSONArray editados = data.getJSONArray("editados");
       JSONArray eliminados = data.getJSONArray("eliminados");
-      int sistemaId = data.getJSONObject("extra").getInt("sistema_id");
+      int moduloId = data.getJSONObject("extra").getInt("modoulo_id");
       db.open();
       db.getDb().openTransaction();
       if(nuevos.length() > 0){
         for (int i = 0; i < nuevos.length(); i++) {
-          JSONObject modulo = nuevos.getJSONObject(i);
-          String antiguoId = modulo.getString("id");
-          String nombre = modulo.getString("nombre");
-          String url = modulo.getString("url");
-          String icono = modulo.getString("icono");
-          Modulo n = new Modulo();
+          JSONObject subtitulo = nuevos.getJSONObject(i);
+          String antiguoId = subtitulo.getString("id");
+          String nombre = subtitulo.getString("nombre");
+          Subtitulo n = new Subtitulo();
           n.set("nombre", nombre);
-          n.set("url", url);
-          n.set("icono", icono);
-          n.set("sistema_id", sistemaId);
+          n.set("modoulo_id", moduloId);
           n.saveIt();
           int nuevoId = (int) n.get("id"); 
           JSONObject temp = new JSONObject();
@@ -77,16 +71,12 @@ public class ModuloHandler{
       }
       if(editados.length() > 0){
         for (int i = 0; i < editados.length(); i++) {
-          JSONObject modulo = editados.getJSONObject(i);
-          int id = modulo.getInt("id");
-          String nombre = modulo.getString("nombre");
-          String url = modulo.getString("url");
-          String icono = modulo.getString("icono");
-          Modulo e = Modulo.findFirst("id = ?", id);
+          JSONObject subtitulo = editados.getJSONObject(i);
+          int id = subtitulo.getInt("id");
+          String nombre = subtitulo.getString("nombre");
+          Subtitulo e = Subtitulo.findFirst("id = ?", id);
           if(e != null){
             e.set("nombre", nombre);
-            e.set("url", url);
-            e.set("icono", icono);
             e.saveIt();
           }
         }
@@ -94,7 +84,7 @@ public class ModuloHandler{
       if(eliminados.length() > 0){
         for (Object eliminado : eliminados) {
           String eleminadoId = (String)eliminado;
-          Modulo d = Modulo.findFirst("id = ?", eleminadoId);
+          Subtitulo d = Subtitulo.findFirst("id = ?", eleminadoId);
           if(d != null){
             d.delete();
           }
@@ -111,7 +101,7 @@ public class ModuloHandler{
       }
     }
     if(error){
-      String[] cuerpoMensaje = {"Se ha producido un error en  guardar los módulos del sitema", execption};
+      String[] cuerpoMensaje = {"Se ha producido un error en  guardar los subtítulos del módulo", execption};
       JSONObject rptaMensaje = new JSONObject();
       rptaMensaje.put("tipo_mensaje", "error");
       rptaMensaje.put("mensaje", cuerpoMensaje);
@@ -119,7 +109,7 @@ public class ModuloHandler{
       rpta = rptaMensaje.toString();
     }else{
       JSONArray cuerpoMensaje =  new JSONArray();
-      cuerpoMensaje.put("Se ha registrado los cambios en los módulos del sitema");
+      cuerpoMensaje.put("Se ha registrado los cambios en los subtítulos del módulo");
       cuerpoMensaje.put(listJSONNuevos);
       JSONObject rptaMensaje = new JSONObject();
       rptaMensaje.put("tipo_mensaje", "success");

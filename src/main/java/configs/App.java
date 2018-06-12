@@ -16,6 +16,7 @@ import java.util.Map;
 import handlers.HomeHandler;
 import handlers.SistemaHandler;
 import handlers.ModuloHandler;
+import handlers.SubtituloHandler;
 
 public class App {
   public static void main(String args[]){
@@ -67,6 +68,8 @@ public class App {
 		post("/sistema/guardar", SistemaHandler.guardar);
 		get("/modulo/listar/:sistema_id", ModuloHandler.listar);
 		post("/modulo/guardar", ModuloHandler.guardar);
+		get("/subtitulo/listar/:modulo_id", SubtituloHandler.listar);
+		post("/subtitulo/guardar", SubtituloHandler.guardar);
   }
 
   public static String renderTemplate(String template, Map model) {
