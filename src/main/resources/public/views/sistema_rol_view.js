@@ -17,6 +17,9 @@ var SistemaRolView = ModalView.extend({
 		"keyup #tablaRol > tbody > tr > td > input.text": "inputTextEscribirRol",
     "click #tablaRol > tbody > tr > td > i.quitar-fila": "quitarFilaRol",
     "click #tablaRol > tbody > tr > td > i.ver-permisos": "verPermisos",
+    // tabla permisos
+    "change #tablaRolPermiso > tbody > tr > td > .input-check": "clickCheckBoxRolPermiso",
+    "click #tablaRolPermiso > tfoot > tr > td > button.guardar-tabla": "guardarTablaRolPermiso",
   },
   //eventos tabla de roles
   inputTextEscribirRol: function(event){
@@ -40,5 +43,16 @@ var SistemaRolView = ModalView.extend({
     this.tablaRolPermiso.limpiarBody();
     this.tablaRolPermiso.listar();
     $("#formTableRolPermiso").removeClass("oculto");
+  },
+  //eventos tabla de permisos
+  clickCheckBoxRolPermiso: function(event){
+    this.tablaRolPermiso.clickCheckBox(event);
+  },
+  guardarTablaRolPermiso: function(evnet){
+    this.tablaRolPermiso.extraData = {
+      sistema_id: this.sistemaId,
+      rol_id: this.tablaRolPermiso.rolId,
+    };
+    this.tablaRolPermiso.guardarTabla(event);
   },
 });

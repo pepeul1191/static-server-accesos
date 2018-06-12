@@ -25,11 +25,17 @@ var dataTablaRolPermiso = {
       estilos: "width: 200px;",
       edicion: true,
     },
+    existe: {
+      tipo: "check",
+      estilos: "width: 30px; padding-left:20px;",
+      edicion: true,
+      key: "existe",
+    },
     filaBotones: {
       estilos: "display: none;"
     },
   },
-  tableKeys: ['id', 'nombre', 'llave'],
+  tableKeys: ['id', 'nombre', 'llave', 'existe'],
   filaBotones: [
     {
       tipo: "i",

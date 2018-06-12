@@ -26,4 +26,3 @@ public class HomeHandler {
     return App.renderTemplate("templates/layouts/app.vm", model);
   };
 }
-
