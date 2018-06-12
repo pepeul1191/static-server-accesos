@@ -50,7 +50,7 @@ public class SubtituloHandler{
       JSONArray nuevos = data.getJSONArray("nuevos");
       JSONArray editados = data.getJSONArray("editados");
       JSONArray eliminados = data.getJSONArray("eliminados");
-      int moduloId = data.getJSONObject("extra").getInt("modoulo_id");
+      int moduloId = data.getJSONObject("extra").getInt("modulo_id");
       db.open();
       db.getDb().openTransaction();
       if(nuevos.length() > 0){
@@ -60,7 +60,7 @@ public class SubtituloHandler{
           String nombre = subtitulo.getString("nombre");
           Subtitulo n = new Subtitulo();
           n.set("nombre", nombre);
-          n.set("modoulo_id", moduloId);
+          n.set("modulo_id", moduloId);
           n.saveIt();
           int nuevoId = (int) n.get("id"); 
           JSONObject temp = new JSONObject();
