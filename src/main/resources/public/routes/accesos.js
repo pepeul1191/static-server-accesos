@@ -60,7 +60,10 @@ var accesosRouter = Backbone.Router.extend({
       this.sistemaRolView = new SistemaRolView(dataSistemaRolView);
     }
     this.sistemaRolView.render();
-    //this.sistemaRolView.tablaModulo.listar();
+    this.sistemaRolView.tablaRol.urlListar = 
+      limpiarURL(BASE_URL + "rol/listar/" , sistema_id);
+    this.sistemaRolView.sistemaId = sistema_id;
+    this.sistemaRolView.tablaRol.listar(sistema_id);
   },
 });
 
