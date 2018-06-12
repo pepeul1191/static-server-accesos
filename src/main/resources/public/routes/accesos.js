@@ -1,3 +1,7 @@
+function limpiarURL(url_original, parametro){
+  return url_original + parametro;
+}
+
 var accesosRouter = Backbone.Router.extend({
   sistemaView: null,
   sistemaMenuView: null,
@@ -36,7 +40,10 @@ var accesosRouter = Backbone.Router.extend({
       this.sistemaMenuView = new SistemaMenuView(dataSistemaMenuView);
     }
     this.sistemaMenuView.render();
-    //this.sistemaMenuView.tablaModulo.listar();
+    this.sistemaMenuView.tablaModulo.urlListar = 
+      limpiarURL(BASE_URL + "modulo/listar/" , sistema_id);
+    this.sistemaMenuView.sistemaId = sistema_id;
+    this.sistemaMenuView.tablaModulo.listar(sistema_id);
   },
   sistemaPermiso: function(sistema_id){
     if(this.sistemaPermisoView == null){
