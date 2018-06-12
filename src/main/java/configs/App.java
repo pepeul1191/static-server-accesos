@@ -66,6 +66,7 @@ public class App {
 		get("/sistema/listar", SistemaHandler.listar);
 		post("/sistema/guardar", SistemaHandler.guardar);
 		get("/modulo/listar/:sistema_id", ModuloHandler.listar);
+		post("/modulo/guardar", ModuloHandler.guardar);
   }
 
   public static String renderTemplate(String template, Map model) {
