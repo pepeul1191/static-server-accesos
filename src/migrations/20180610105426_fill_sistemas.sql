@@ -1,4 +1,6 @@
+--DOWN
 --TRUNCATE TABLE sistemas;
+--UP
 INSERT INTO sistemas (nombre, version, repositorio) VALUES (
   'java-spark-accesos', 
   '0.0.1', 
