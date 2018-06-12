@@ -69,7 +69,6 @@ var SistemaMenuView = ModalView.extend({
   },
   verItems: function(event){
     var subtituloId = event.target.parentElement.parentElement.firstChild.innerHTML;
-    console.log(subtituloId);
     this.tablaItem.urlListar = 
       limpiarURL(BASE_URL + "item/listar/" , subtituloId);
     this.tablaItem.subtituloId = subtituloId;

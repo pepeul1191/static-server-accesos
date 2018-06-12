@@ -17,6 +17,7 @@ import handlers.HomeHandler;
 import handlers.SistemaHandler;
 import handlers.ModuloHandler;
 import handlers.SubtituloHandler;
+import handlers.ItemHandler;
 
 public class App {
   public static void main(String args[]){
@@ -70,6 +71,8 @@ public class App {
 		post("/modulo/guardar", ModuloHandler.guardar);
 		get("/subtitulo/listar/:modulo_id", SubtituloHandler.listar);
 		post("/subtitulo/guardar", SubtituloHandler.guardar);
+		get("/item/listar/:subtitulo_id", ItemHandler.listar);
+		post("/item/guardar", ItemHandler.guardar);
   }
 
   public static String renderTemplate(String template, Map model) {
