@@ -15,6 +15,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Map;
 import handlers.HomeHandler;
 import handlers.SistemaHandler;
+import handlers.ModuloHandler;
 
 public class App {
   public static void main(String args[]){
@@ -64,6 +65,7 @@ public class App {
 		get("/accesos/", HomeHandler.index);
 		get("/sistema/listar", SistemaHandler.listar);
 		post("/sistema/guardar", SistemaHandler.guardar);
+		get("/modulo/listar/:sistema_id", ModuloHandler.listar);
   }
 
   public static String renderTemplate(String template, Map model) {
