@@ -1,5 +1,5 @@
 --DOWN
---TRUNCATE TABLE items;
+--TRUNCATE TABLE estado_usuarios;
 --UP
 INSERT INTO estado_usuarios (nombre) VALUES (
   'activo'
