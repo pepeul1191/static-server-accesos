@@ -33,24 +33,31 @@ var dataTablaUsuario = {
   filaBotones: [
     {
       tipo: "href",
-      claseOperacion: "gestionar-menu",
-      clase: "fa-chevron-right",
+      claseOperacion: "ver-accesos",
+      clase: "fa-thumb-tack",
       estilos: "padding-left: 10px;",
-      url: BASE_URL + 'accesos/#/usuario/menu/'/*+ usuario_id*/,
+      url: BASE_URL + 'accesos/#/usuario/logs/'/*+ usuario_id*/,
     },
     {
       tipo: "href",
-      claseOperacion: "gesionar-permisos",
+      claseOperacion: "editar-usuario",
+      clase: "fa-pencil",
+      estilos: "padding-left: 10px;",
+      url: BASE_URL + 'accesos/#/usuario/editar/'/*+ usuario_id*/,
+    },
+    {
+      tipo: "href",
+      claseOperacion: "asociar-sistemas",
+      clase: "fa-laptop",
+      estilos: "padding-left: 10px;",
+      url: BASE_URL + 'accesos/#/usuario/sistema/'/*+ usuario_id*/,
+    },
+    {
+      tipo: "href",
+      claseOperacion: "asociar-roles-permisos",
       clase: "fa-list",
       estilos: "padding-left: 10px;",
-      url: BASE_URL + 'accesos/#/usuario/permiso/'/*+ usuario_id*/,
-    },
-    {
-      tipo: "href",
-      claseOperacion: "gestionar-roles",
-      clase: "fa-id-card-o",
-      estilos: "padding-left: 10px;",
-      url: BASE_URL + 'accesos/#/usuario/rol/'/*+ usuario_id*/,
+      url: BASE_URL + 'accesos/#/usuario/roles_permisos/'/*+ usuario_id*/,
     },
     {
       tipo: "i",

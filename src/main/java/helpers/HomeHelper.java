@@ -67,6 +67,7 @@ public class HomeHelper extends ApplicationHelper{
           "views/sistema_permiso_view",
           "views/sistema_rol_view",
           "views/usuario_view",
+          "views/usuario_log_view",
           "routes/accesos",
         });
       case "produccion":

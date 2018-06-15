@@ -8,6 +8,10 @@ var accesosRouter = Backbone.Router.extend({
   sistemaPermisoView: null,
   sistemaRolView: null,
   usuarioView: null,
+  usuarioLogView: null,
+  usuarioDetalleView: null,
+  usuarioSistemaView: null,
+  usuarioRolPermisoView: null,
   initialize: function() {
   },
   routes: {
@@ -75,6 +79,14 @@ var accesosRouter = Backbone.Router.extend({
     }
     this.usuarioView.render();
     this.usuarioView.tablaUsuario.listar();
+  },
+  usuarioLog: function(usuario_id){
+    if(this.usuarioLogView == null){
+      this.usuarioLogView = new UsuarioLogView();
+    }
+    this.usuarioLogView.render();
+    this.sistemaRolView.usuarioId = usuario_id;
+    this.usuarioLogView.tablaUsuario.listar();
   },
 });
 
