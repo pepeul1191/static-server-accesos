@@ -7,6 +7,7 @@ var accesosRouter = Backbone.Router.extend({
   sistemaMenuView: null,
   sistemaPermisoView: null,
   sistemaRolView: null,
+  usuarioView: null,
   initialize: function() {
   },
   routes: {
@@ -28,6 +29,7 @@ var accesosRouter = Backbone.Router.extend({
   default: function() {
     //window.location.href = BASE_URL + "error/access/404";
   },
+  //sistema
   sistemaIndex: function(){
     if(this.sistemaView == null){
       this.sistemaView = new SistemaView();
@@ -65,6 +67,14 @@ var accesosRouter = Backbone.Router.extend({
     this.sistemaRolView.sistemaId = sistema_id;
     this.sistemaRolView.tablaRol.listar(sistema_id);
     this.sistemaRolView.tablaRolPermiso.sistemaId = sistema_id;
+  },
+  //usuario
+  usuarioIndex: function(){
+    if(this.usuarioView == null){
+      this.usuarioView = new UsuarioView();
+    }
+    this.usuarioView.render();
+    this.usuarioView.tablaUsuario.listar();
   },
 });
 
