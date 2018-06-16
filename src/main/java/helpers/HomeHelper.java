@@ -56,6 +56,10 @@ public class HomeHelper extends ApplicationHelper{
           "data/modal_sistema_menu_data",
           "data/modal_sistema_permiso_data",
           "data/modal_sistema_rol_data",
+          "data/modal_usuario_detalle_data",
+          "data/modal_usuario_sistema_data",
+          "data/modal_usuario_log_data",
+          "data/modal_usuario_rol_permiso_data",
           "data/tabla_sistema_modulo_data",
           "data/tabla_modulo_subtitulo_data",
           "data/tabla_subtitulo_item_data",
@@ -68,6 +72,9 @@ public class HomeHelper extends ApplicationHelper{
           "views/sistema_rol_view",
           "views/usuario_view",
           "views/usuario_log_view",
+          "views/usuario_detalle_view",
+          "views/usuario_sistema_view",
+          "views/usuario_rol_permiso_view",
           "routes/accesos",
         });
       case "produccion":

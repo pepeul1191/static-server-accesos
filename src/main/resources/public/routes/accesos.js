@@ -22,8 +22,8 @@ var accesosRouter = Backbone.Router.extend({
     "sistema/rol/:sistema_id" : "sistemaRol",
     "usuario/logs/:usuario_id" : "usuarioLog",
     "usuario/editar/:usuario_id" : "usuarioDetalle", 
-    "usuario/sistemas/:usuario_id" : "usuarioSistemas", 
-    "usuario/roles_permisos/:usuario_id" : "usuarioRolesPermisos", 
+    "usuario/sistema/:usuario_id" : "usuarioSistema", 
+    "usuario/roles_permisos/:usuario_id" : "usuarioRolPermiso", 
     "usuario" : "usuarioIndex",
     "*actions" : "default",
   },
@@ -82,11 +82,35 @@ var accesosRouter = Backbone.Router.extend({
   },
   usuarioLog: function(usuario_id){
     if(this.usuarioLogView == null){
-      this.usuarioLogView = new UsuarioLogView();
+      this.usuarioLogView = new UsuarioLogView(dataUsuarioLogView);
     }
     this.usuarioLogView.render();
-    this.sistemaRolView.usuarioId = usuario_id;
-    this.usuarioLogView.tablaUsuario.listar();
+    //this.sistemaRolView.usuarioId = usuario_id;
+    //this.usuarioLogView.tablaUsuario.listar();
+  },
+  usuarioDetalle: function(usuario_id){
+    if(this.usuarioDetalleView == null){
+      this.usuarioDetalleView = new UsuarioDetalleView(dataUsuarioDetalleView);
+    }
+    this.usuarioDetalleView.render();
+    //this.sistemaRolView.usuarioId = usuario_id;
+    //this.usuarioDetalleView.tablaUsuario.listar();
+  },
+  usuarioSistema: function(usuario_id){
+    if(this.usuarioSistemaView == null){
+      this.usuarioSistemaView = new UsuarioSistemaView(dataUsuarioSistemaView);
+    }
+    this.usuarioSistemaView.render();
+    //this.sistemaRolView.usuarioId = usuario_id;
+    //this.usuarioSistemaView.tablaUsuario.listar();
+  },
+  usuarioRolPermiso: function(usuario_id){
+    if(this.usuarioRolPermisoView == null){
+      this.usuarioRolPermisoView = new UsuarioRolPermisoView(dataUsuarioRolPermisoView);
+    }
+    this.usuarioRolPermisoView.render();
+    //this.sistemaRolView.usuarioId = usuario_id;
+    //this.usuarioRolPermisoView.tablaUsuario.listar();
   },
 });
 
