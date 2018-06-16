@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import configs.Database;
 import models.Usuario;
+import models.ViewUsuarioCorreoEstado;;
 
 public class UsuarioHandler{
   public static Route listar = (Request request, Response response) -> {
@@ -46,12 +47,14 @@ public class UsuarioHandler{
     try {
       List<JSONObject> rptaTemp = new ArrayList<JSONObject>();
       db.open();
-      List<Usuario> rptaList = Usuario.find("modulo_id = ?", usuarioId);
-      for (Usuario subtitulo : rptaList) {
+      List<ViewUsuarioCorreoEstado> rptaList = ViewUsuarioCorreoEstado.find("id = ?", usuarioId);
+      for (ViewUsuarioCorreoEstado usuario : rptaList) {
         JSONObject obj = new JSONObject();
-        obj.put("id", subtitulo.get("id"));
-        obj.put("usuario", subtitulo.get("usuario"));
-        obj.put("correo", subtitulo.get("correo"));
+        obj.put("id", usuario.get("id"));
+        obj.put("usuario", usuario.get("usuario"));
+        obj.put("correo", usuario.get("correo"));
+        obj.put("estado_usuario_id", usuario.get("estado_usuario_id"));
+        obj.put("estado_usuario_nombre", usuario.get("estado_usuario_nombre"));
         rptaTemp.add(obj);
       }
       rpta = rptaTemp.toString();
