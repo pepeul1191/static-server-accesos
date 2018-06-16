@@ -38,4 +38,33 @@ public class UsuarioHandler{
     }
     return rpta;
   };
+
+  public static Route usuarioCorreo = (Request request, Response response) -> {
+    String rpta = "";
+    int usuarioId = Integer.parseInt(request.params(":usuario_id"));
+    Database db = new Database();
+    try {
+      List<JSONObject> rptaTemp = new ArrayList<JSONObject>();
+      db.open();
+      List<Usuario> rptaList = Usuario.find("modulo_id = ?", usuarioId);
+      for (Usuario subtitulo : rptaList) {
+        JSONObject obj = new JSONObject();
+        obj.put("id", subtitulo.get("id"));
+        obj.put("usuario", subtitulo.get("usuario"));
+        obj.put("correo", subtitulo.get("correo"));
+        rptaTemp.add(obj);
+      }
+      rpta = rptaTemp.toString();
+    }catch (Exception e) {
+      String[] error = {"Se ha producido un error en  obtener el usuario y correo", e.toString()};
+      JSONObject rptaTry = new JSONObject();
+      rptaTry.put("tipo_mensaje", "error");
+      rptaTry.put("mensaje", error);
+      rpta = rptaTry.toString();
+      response.status(500);
+    } finally {
+      db.close();
+    }
+    return rpta;
+  };
 }

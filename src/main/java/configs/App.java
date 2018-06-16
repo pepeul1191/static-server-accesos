@@ -21,6 +21,7 @@ import handlers.ItemHandler;
 import handlers.PermisoHandler;
 import handlers.RolHandler;
 import handlers.UsuarioHandler;
+import handlers.EstadoUsuarioHandler;
 
 public class App {
   public static void main(String args[]){
@@ -82,7 +83,9 @@ public class App {
 		post("/rol/guardar", RolHandler.guardar);
 		get("/rol/permiso/listar/:sistema_id/:rol_id", RolHandler.listarPermisos);
 		post("/rol/permiso/guardar", RolHandler.guardarPermisos);
+		get("/estado_usuario/listar", EstadoUsuarioHandler.listar);
 		get("/usuario/listar", UsuarioHandler.listar);
+		get("/usuario/obtener_usuario_correo/:usuario_id", UsuarioHandler.usuarioCorreo);
   }
 
   public static String renderTemplate(String template, Map model) {
