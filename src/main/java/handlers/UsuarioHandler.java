@@ -45,19 +45,15 @@ public class UsuarioHandler{
     int usuarioId = Integer.parseInt(request.params(":usuario_id"));
     Database db = new Database();
     try {
-      List<JSONObject> rptaTemp = new ArrayList<JSONObject>();
       db.open();
-      List<ViewUsuarioCorreoEstado> rptaList = ViewUsuarioCorreoEstado.find("id = ?", usuarioId);
-      for (ViewUsuarioCorreoEstado usuario : rptaList) {
-        JSONObject obj = new JSONObject();
-        obj.put("id", usuario.get("id"));
-        obj.put("usuario", usuario.get("usuario"));
-        obj.put("correo", usuario.get("correo"));
-        obj.put("estado_usuario_id", usuario.get("estado_usuario_id"));
-        obj.put("estado_usuario_nombre", usuario.get("estado_usuario_nombre"));
-        rptaTemp.add(obj);
-      }
-      rpta = rptaTemp.toString();
+      ViewUsuarioCorreoEstado usuario = ViewUsuarioCorreoEstado.findFirst("id = ?", usuarioId);
+      JSONObject obj = new JSONObject();
+      obj.put("id", usuario.get("id"));
+      obj.put("usuario", usuario.get("usuario"));
+      obj.put("correo", usuario.get("correo"));
+      obj.put("estado_usuario_id", usuario.get("estado_usuario_id"));
+      obj.put("estado_usuario_nombre", usuario.get("estado_usuario_nombre"));
+      rpta = obj.toString();
     }catch (Exception e) {
       String[] error = {"Se ha producido un error en  obtener el usuario y correo", e.toString()};
       JSONObject rptaTry = new JSONObject();

@@ -30,7 +30,7 @@
                   <label for="cbmEstado">Estado</label>
                   <select class="form-control" id="cbmEstado" {{#if disabled}}disabled{{/if}}>
                     <option value="E"></option>
-                    
+                    {{#fillSelect estados usuario.estado_usuario_id}}{{/fillSelect}}
                   </select>
                 </div>
               </div>
@@ -48,19 +48,19 @@
               <div class="col-md-3">
                 <div class="form-group">
                   <label for="txtUsuario">Contraseña Antigua</label>
-                  <input type="text" class="form-control" id="txtUsuario" placeholder="" value="{{usuario.usuario}}">
+                  <input type="text" class="form-control" id="txtUsuario" placeholder="" value="">
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="form-group">
                   <label for="txtCorreo">Contraseña Nueva</label>
-                  <input type="text" class="form-control" id="txtCorreo" placeholder="" value="{{usuario.correo}}">
+                  <input type="text" class="form-control" id="txtCorreo" placeholder="" value="">
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="form-group">
                   <label for="txtCorreo">Repita Contraseña Nueva</label>
-                  <input type="text" class="form-control" id="txtCorreo" placeholder="" value="{{usuario.correo}}">
+                  <input type="text" class="form-control" id="txtCorreo" placeholder="" value="">
                 </div>
               </div>
               <div class="col-md-3" style="padding-top: 25px;">
@@ -73,5 +73,3 @@
     </div>
   </div>
 </script>
-
-<!-- {{#fillSelect estados usuario.estado_usuario_id}}{{/fillSelect}} -->

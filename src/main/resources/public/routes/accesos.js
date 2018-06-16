@@ -92,9 +92,13 @@ var accesosRouter = Backbone.Router.extend({
     if(this.usuarioDetalleView == null){
       this.usuarioDetalleView = new UsuarioDetalleView(dataUsuarioDetalleView);
     }
+    this.usuarioDetalleView.set("usuario_id", usuario_id);
+    this.usuarioDetalleView.llenarSelect();
+    this.usuarioDetalleView.obtenerUsuarioCorreo();
+    this.usuarioDetalleView.context.usuario = this.usuarioDetalleView.model;
+    this.usuarioDetalleView.context.estados = this.usuarioDetalleView.estadoUsuariosSelect.toJSON();
+    console.log(this.usuarioDetalleView.context);
     this.usuarioDetalleView.render();
-    //this.sistemaRolView.usuarioId = usuario_id;
-    //this.usuarioDetalleView.tablaUsuario.listar();
   },
   usuarioSistema: function(usuario_id){
     if(this.usuarioSistemaView == null){

@@ -44,6 +44,8 @@ public class HomeHelper extends ApplicationHelper{
           "models/permiso",
           "models/rol",
           "models/usuario",
+          "models/estado_usuario",
+          "collections/estado_usuario_collection",
           "collections/sistema_collection",
           "collections/modulo_collection",
           "collections/subtitulo_collection",
