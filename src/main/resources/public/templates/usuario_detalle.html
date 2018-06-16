@@ -8,8 +8,70 @@
         </button>
       </div>
       <div class="modal-body">
-
+        <label class="texto-der" id="mensajeRptaDetalle"></label>
+        <h6>Datos del Usuario</h6>
+        <div class="row" style="margin-top:15px">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="txtUsuario">Usuario</label>
+                  <input type="text" class="form-control" id="txtUsuario" placeholder="" value="{{usuario.usuario}}">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="txtCorreo">Correo</label>
+                  <input type="text" class="form-control" id="txtCorreo" placeholder="" value="{{usuario.correo}}">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="cbmEstado">Estado</label>
+                  <select class="form-control" id="cbmEstado" {{#if disabled}}disabled{{/if}}>
+                    <option value="E"></option>
+                    
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-3" style="padding-top: 25px;">
+                <button type="button" class="btn btn-default pull-right" id="btnGuardarUsuarioCorreo"><i class="fa fa-check" style="margin-right: 5px;" aria-hidden="true"></i>Guardar Cambios</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <h6>Cambiar contraseña</h6>
+        <div class="row" style="margin-top:15px">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="txtUsuario">Contraseña Antigua</label>
+                  <input type="text" class="form-control" id="txtUsuario" placeholder="" value="{{usuario.usuario}}">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="txtCorreo">Contraseña Nueva</label>
+                  <input type="text" class="form-control" id="txtCorreo" placeholder="" value="{{usuario.correo}}">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="txtCorreo">Repita Contraseña Nueva</label>
+                  <input type="text" class="form-control" id="txtCorreo" placeholder="" value="{{usuario.correo}}">
+                </div>
+              </div>
+              <div class="col-md-3" style="padding-top: 25px;">
+                <button type="button" class="btn btn-default pull-right" id="btnGuardarUsuarioCorreo"><i class="fa fa-check" style="margin-right: 5px;" aria-hidden="true"></i>Guardar Cambios</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </script>
+
+<!-- {{#fillSelect estados usuario.estado_usuario_id}}{{/fillSelect}} -->
