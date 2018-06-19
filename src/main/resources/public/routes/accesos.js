@@ -105,7 +105,7 @@ var accesosRouter = Backbone.Router.extend({
     }
     this.usuarioSistemaView.render();
     this.usuarioSistemaView.tablaSistema.urlListar = 
-    limpiarURL(BASE_URL + "usuario/sistema/" , usuario_id);
+      limpiarURL(BASE_URL + "usuario/sistema/" , usuario_id);
     this.usuarioSistemaView.usuarioId = usuario_id;
     this.usuarioSistemaView.tablaSistema.listar(usuario_id);
     this.usuarioSistemaView.tablaSistema.usuarioId = usuario_id;

@@ -7,13 +7,14 @@ var UsuarioRolPermisoView = ModalView.extend({
     this.inheritEvents(ModalView);
     // delegación de eventos
     this.delegateEvents();
-    //this.tablaLog = new TableView(dataTablaLog);
+    this.tablaPermiso = new TableView(dataTablaUsuarioPermiso);
+    this.tablaRol = new TableView(dataTablaUsuarioRol);
   },
   events: {
     // se está usando asignacion dinamica de eventos en el constructor
-    // tabla modulos
+    "change #cbmSistema": "seleccionarSistema",
   },
-  //combo
+  //llenarcombo
   cbmSistemas:function(){
     var usuario_id = this.get("usuario_id");
     var rpta = [];
@@ -37,5 +38,25 @@ var UsuarioRolPermisoView = ModalView.extend({
       }
     });
     return rpta;
+  },
+  //seleccionar combo
+  seleccionarSistema: function(event){
+    var sistema_id = event.target.value;
+    var usuario_id = this.get("usuario_id");
+    //borrar body de tablas
+    $("#tablaUsuarioPermiso > tbody").empty();
+    $("#tablaUsuarioRol > tbody").empty();
+    if(sistema_id != "E"){
+      //llenar tabla de roles
+      this.tablaRol.urlListar = 
+        limpiarURL(BASE_URL + "usuario/rol/" , sistema_id + "/" + usuario_id);
+      this.tablaRol.listar();
+      this.tablaRol.usuarioId = usuario_id;
+      //llenar tabla de permisos
+      this.tablaPermiso.urlListar = 
+        limpiarURL(BASE_URL + "usuario/permiso/" , sistema_id + "/" + usuario_id);
+      this.tablaPermiso.listar();
+      this.tablaPermiso.usuarioId = usuario_id;
+    }
   },
 });

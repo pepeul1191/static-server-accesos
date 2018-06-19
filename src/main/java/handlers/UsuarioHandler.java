@@ -445,6 +445,7 @@ public class UsuarioHandler{
         obj.put("id", usuarioPermiso.get("id"));
         obj.put("nombre", usuarioPermiso.get("nombre"));
         obj.put("existe", usuarioPermiso.get("existe"));
+        obj.put("llave", usuarioPermiso.get("llave"));
         rptaTemp.add(obj);
       }
       rpta = rptaTemp.toString();
