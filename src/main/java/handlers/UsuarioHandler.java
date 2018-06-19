@@ -3,7 +3,7 @@ package handlers;
 import spark.Request;
 import spark.Response;
 import spark.Route;
-//import org.json.JSONArray;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +63,181 @@ public class UsuarioHandler{
       response.status(500);
     } finally {
       db.close();
+    }
+    return rpta;
+  };
+
+  public static Route nombreRepetido = (Request request, Response response) -> {
+    String rpta = "";
+    Database db = new Database();
+    try {
+      JSONObject data = new JSONObject(request.queryParams("data"));
+      String usuarioId = data.getString("id");
+      String usuario = data.getString("usuario");
+      db.open();
+      rpta = "1";
+      if (usuarioId.equalsIgnoreCase("E")){
+        //SELECT COUNT"(*) AS cantidad FROM usuarios WHERE usuario = ?
+        rpta = Usuario.count("usuario = ?", usuario) + "";
+      }else{
+        //SELECT COUNT(*) AS cantidad FROM usuarios WHERE usuario = ? AND id = ?
+        long cantidad = Usuario.count("usuario = ? AND id = ?", usuario, usuarioId);
+        if (cantidad == 1){
+          rpta = "0";
+        }else{
+          //SELECT COUNT(*) AS cantidad FROM usuarios WHERE usuario = ?
+          rpta = Usuario.count("usuario = ?", usuario) + "";
+        }
+      }
+    }catch (Exception e) {
+      e.printStackTrace();
+      String[] errorArray = {"Se ha producido un error en validar si el nombre es repetido", e.toString()};
+      JSONObject rptaTry = new JSONObject();
+      rptaTry.put("tipo_mensaje", "error");
+      rptaTry.put("mensaje", errorArray);
+      rpta = rptaTry.toString();
+      response.status(500);
+    } finally {
+      if(db.getDb().hasConnection()){
+        db.close();
+      }
+    }
+    return rpta;
+  };
+
+  public static Route contraseniaRepetida = (Request request, Response response) -> {
+    String rpta = "";
+    Database db = new Database();
+    try {
+      JSONObject data = new JSONObject(request.queryParams("data"));
+      String usuarioId = data.getString("id");
+      String contrasenia = data.getString("contrasenia");
+      db.open();
+      rpta = Usuario.count("contrasenia = ? AND id = ?", contrasenia, usuarioId) + "";
+    }catch (Exception e) {
+      e.printStackTrace();
+      String[] errorArray = {"Se ha producido un error en validar si la contraseña del usuario", e.toString()};
+      JSONObject rptaTry = new JSONObject();
+      rptaTry.put("tipo_mensaje", "error");
+      rptaTry.put("mensaje", errorArray);
+      rpta = rptaTry.toString();
+      response.status(500);
+    } finally {
+      if(db.getDb().hasConnection()){
+        db.close();
+      }
+    }
+    return rpta;
+  };
+
+  public static Route correoRepetido = (Request request, Response response) -> {
+    String rpta = "";
+    Database db = new Database();
+    try {
+      JSONObject data = new JSONObject(request.queryParams("data"));
+      String usuarioId = data.getString("id");
+      String correo = data.getString("correo");
+      db.open();
+      rpta = "1";
+      if (usuarioId.equalsIgnoreCase("E")){
+        //SELECT COUNT(*) AS cantidad FROM usuarios WHERE correo = ?
+        rpta = Usuario.count("correo = ?", correo) + "";
+      }else{
+        //SELECT COUNT(*) AS cantidad FROM usuarios WHERE correo = ? AND id = ?
+        long cantidad = Usuario.count("correo = ? AND id = ?", correo, usuarioId);
+        if (cantidad == 1){
+          rpta = "0";
+        }else{
+          //SELECT COUNT(*) AS cantidad FROM usuarios WHERE correo = ?
+          rpta = Usuario.count("correo = ?", correo) + "";
+        }
+      }
+    }catch (Exception e) {
+      e.printStackTrace();
+      String[] errorArray = {"Se ha producido un error en validar si el correo es repetido", e.toString()};
+      JSONObject rptaTry = new JSONObject();
+      rptaTry.put("tipo_mensaje", "error");
+      rptaTry.put("mensaje", errorArray);
+      rpta = rptaTry.toString();
+      response.status(500);
+    } finally {
+      if(db.getDb().hasConnection()){
+        db.close();
+      }
+    }
+    return rpta;
+  };
+
+  public static Route guardarUsuarioCorreo = (Request request, Response response) -> {
+    String rpta = "";
+    Database db = new Database();
+    try {
+      JSONObject data = new JSONObject(request.queryParams("usuario"));
+      String usuarioId = data.getString("id");
+      String correo = data.getString("correo");
+      String usuario = data.getString("usuario");
+      String estado_usuario_id = data.getString("estado_usuario_id");
+      db.open();
+      Usuario e = Usuario.findFirst("id = ?", usuarioId);
+      if(e != null){
+        e.set("correo", correo);
+        e.set("usuario", usuario);
+        e.set("estado_usuario_id", estado_usuario_id);
+        e.saveIt();
+      }
+      JSONArray cuerpoMensaje =  new JSONArray();
+      cuerpoMensaje.put("Se ha registrado los cambios en los datos generales del usuario");
+      JSONObject rptaMensaje = new JSONObject();
+      rptaMensaje.put("tipo_mensaje", "success");
+      rptaMensaje.put("mensaje", cuerpoMensaje);
+      rpta = rptaMensaje.toString();
+    }catch (Exception e) {
+      e.printStackTrace();
+      String[] errorArray = {"Se ha producido un error en actualizar el usaurio", e.toString()};
+      JSONObject rptaTry = new JSONObject();
+      rptaTry.put("tipo_mensaje", "error");
+      rptaTry.put("mensaje", errorArray);
+      rpta = rptaTry.toString();
+      response.status(500);
+    } finally {
+      if(db.getDb().hasConnection()){
+        db.close();
+      }
+    }
+    return rpta;
+  };
+
+  public static Route guardarContrasenia = (Request request, Response response) -> {
+    String rpta = "";
+    Database db = new Database();
+    try {
+      JSONObject data = new JSONObject(request.queryParams("contrasenia"));
+      String usuarioId = data.getString("id");
+      String contrasenia = data.getString("contrasenia");
+      db.open();
+      Usuario e = Usuario.findFirst("id = ?", usuarioId);
+      if(e != null){
+        e.set("contrasenia", contrasenia);
+        e.saveIt();
+      }
+      JSONArray cuerpoMensaje =  new JSONArray();
+      cuerpoMensaje.put("Se ha el cambio de contraseña del usuario");
+      JSONObject rptaMensaje = new JSONObject();
+      rptaMensaje.put("tipo_mensaje", "success");
+      rptaMensaje.put("mensaje", cuerpoMensaje);
+      rpta = rptaMensaje.toString();
+    }catch (Exception e) {
+      e.printStackTrace();
+      String[] errorArray = {"Se ha producido un error en actualizar la contraseña del usaurio", e.toString()};
+      JSONObject rptaTry = new JSONObject();
+      rptaTry.put("tipo_mensaje", "error");
+      rptaTry.put("mensaje", errorArray);
+      rpta = rptaTry.toString();
+      response.status(500);
+    } finally {
+      if(db.getDb().hasConnection()){
+        db.close();
+      }
     }
     return rpta;
   };

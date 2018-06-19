@@ -86,6 +86,11 @@ public class App {
 		get("/estado_usuario/listar", EstadoUsuarioHandler.listar);
 		get("/usuario/listar", UsuarioHandler.listar);
 		get("/usuario/obtener_usuario_correo/:usuario_id", UsuarioHandler.usuarioCorreo);
+		post("/usuario/nombre_repetido", UsuarioHandler.nombreRepetido);
+		post("/usuario/contrasenia_repetida", UsuarioHandler.contraseniaRepetida);
+		post("/usuario/correo_repetido", UsuarioHandler.correoRepetido);
+		post("/usuario/guardar_usuario_correo", UsuarioHandler.guardarUsuarioCorreo);
+		post("/usuario/guardar_contrasenia", UsuarioHandler.guardarContrasenia);
   }
 
   public static String renderTemplate(String template, Map model) {

@@ -97,7 +97,6 @@ var accesosRouter = Backbone.Router.extend({
     this.usuarioDetalleView.obtenerUsuarioCorreo();
     this.usuarioDetalleView.context.usuario = this.usuarioDetalleView.model;
     this.usuarioDetalleView.context.estados = this.usuarioDetalleView.estadoUsuariosSelect.toJSON();
-    console.log(this.usuarioDetalleView.context);
     this.usuarioDetalleView.render();
   },
   usuarioSistema: function(usuario_id){
