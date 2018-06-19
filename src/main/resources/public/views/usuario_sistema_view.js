@@ -19,7 +19,7 @@ var UsuarioSistemaView = ModalView.extend({
   clickCheckBoxSistemaUsuario: function(event){
     this.tablaSistema.clickCheckBox(event);
   },
-  guardarTablaSistemaUsuario: function(evnet){
+  guardarTablaSistemaUsuario: function(event){
     this.tablaSistema.extraData = {
       usuario_id: this.usuarioId,
     };

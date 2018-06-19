@@ -287,28 +287,28 @@ var UsuarioDetalleView = ModalView.extend({
 		//this.model.validar();
 		if(this.model.datos_contrasenias_valido == true){
 			$.ajax({
-	      		type: "POST",
-	      		url: BASE_URL + "usuario/guardar_contrasenia",
-	      		data: "contrasenia=" + JSON.stringify(this.datosContraseniasToJSON()),
-	      		async: false,
-	      		success: function(data){
-	      			var rpta = JSON.parse(data);
-	      			if(rpta['tipo_mensaje'] == "error"){
-	      				$("#txtMensajeRptaUsuarioContrasenia").removeClass("color-success");
-	      				$("#txtMensajeRptaUsuarioContrasenia").addClass("color-rojo");
-	      				$("#txtMensajeRptaUsuarioContrasenia").html(rpta['mensaje'][0]);
-	      				correo_valido_valor = false;
-	      			}else{
-	      				$("#txtMensajeRptaUsuarioContrasenia").removeClass("color-rojo");
-	      				$("#txtMensajeRptaUsuarioContrasenia").addClass("color-success");
-	      				$("#txtMensajeRptaUsuarioContrasenia").html(rpta['mensaje'][0]);
-	      				correo_valido_valor = true;
-	      			}
-	      		},
-	      		error: function(data){
-	      			//FALTA MANEJAR EL ERROR DEL AJAX
-	      		}
-	      	});
+        type: "POST",
+        url: BASE_URL + "usuario/guardar_contrasenia",
+        data: "contrasenia=" + JSON.stringify(this.datosContraseniasToJSON()),
+        async: false,
+        success: function(data){
+          var rpta = JSON.parse(data);
+          if(rpta['tipo_mensaje'] == "error"){
+            $("#txtMensajeRptaUsuarioContrasenia").removeClass("color-success");
+            $("#txtMensajeRptaUsuarioContrasenia").addClass("color-rojo");
+            $("#txtMensajeRptaUsuarioContrasenia").html(rpta['mensaje'][0]);
+            correo_valido_valor = false;
+          }else{
+            $("#txtMensajeRptaUsuarioContrasenia").removeClass("color-rojo");
+            $("#txtMensajeRptaUsuarioContrasenia").addClass("color-success");
+            $("#txtMensajeRptaUsuarioContrasenia").html(rpta['mensaje'][0]);
+            correo_valido_valor = true;
+          }
+        },
+        error: function(data){
+          //FALTA MANEJAR EL ERROR DEL AJAX
+        }
+      });
 		}else{
 			
 		}

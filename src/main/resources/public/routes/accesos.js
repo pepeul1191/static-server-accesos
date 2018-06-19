@@ -114,9 +114,10 @@ var accesosRouter = Backbone.Router.extend({
     if(this.usuarioRolPermisoView == null){
       this.usuarioRolPermisoView = new UsuarioRolPermisoView(dataUsuarioRolPermisoView);
     }
+    this.usuarioRolPermisoView.set("usuario_id", usuario_id);
+    this.usuarioRolPermisoView.context.sistemas = this.usuarioRolPermisoView.cbmSistemas();
+    this.usuarioRolPermisoView.context.usuario_id = usuario_id;
     this.usuarioRolPermisoView.render();
-    //this.sistemaRolView.usuarioId = usuario_id;
-    //this.usuarioRolPermisoView.tablaUsuario.listar();
   },
 });
 
