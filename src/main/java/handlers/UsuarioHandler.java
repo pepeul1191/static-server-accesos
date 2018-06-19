@@ -13,7 +13,10 @@ import models.Acceso;
 import models.ViewUsuarioCorreoEstado;
 import models.ViewUsuarioSistema;
 import models.UsuarioSistema;
-import java.sql.Timestamp;
+import models.UsuarioPermiso;
+import models.UsuarioRol;
+import models.ViewUsuarioRol;
+import models.ViewUsuarioPermiso;
 
 public class UsuarioHandler{
   public static Route validar = (Request request, Response response) -> {
@@ -373,4 +376,88 @@ public class UsuarioHandler{
     }
     return rpta;
   };  
+
+  public static Route listarUsuarioSistemaRoles = (Request request, Response response) -> {
+    String rpta = "";
+    int usuarioId = Integer.parseInt(request.params(":usuario_id"));
+    int sistemaId = Integer.parseInt(request.params(":sistema_id"));
+    Database db = new Database();
+    try {
+      List<JSONObject> rptaTemp = new ArrayList<JSONObject>();
+      db.open();
+      String sql = 
+        "SELECT T.id AS id, T.nombre AS nombre, (CASE WHEN (P.existe = 1) THEN 1 ELSE 0 END) AS existe FROM " +
+        "(" +
+          "SELECT id, nombre, 0 AS existe FROM roles WHERE sistema_id = ?" + 
+        ") T " + 
+        "LEFT JOIN " +
+        "(" +
+          "SELECT R.id, R.nombre, 1 AS existe  FROM roles R " +
+          "INNER JOIN usuarios_roles UR ON R.id = UR.rol_id " +
+          "WHERE UR.usuario_id = ? " +
+        ") P " +
+        "ON T.id = P.id";
+      List<ViewUsuarioRol> rptaList = ViewUsuarioRol.findBySQL(sql, sistemaId,  usuarioId);
+      for (ViewUsuarioRol usurioRol : rptaList) {
+        JSONObject obj = new JSONObject();
+        obj.put("id", usurioRol.get("id"));
+        obj.put("nombre", usurioRol.get("nombre"));
+        obj.put("existe", usurioRol.get("existe"));
+        rptaTemp.add(obj);
+      }
+      rpta = rptaTemp.toString();
+    }catch (Exception e) {
+      String[] error = {"Se ha producido un error en listar los roles del usuario", e.toString()};
+      JSONObject rptaTry = new JSONObject();
+      rptaTry.put("tipo_mensaje", "error");
+      rptaTry.put("mensaje", error);
+      rpta = rptaTry.toString();
+      response.status(500);
+    } finally {
+      db.close();
+    }
+    return rpta;
+  };
+
+  public static Route listarUsuarioSistemaPermisos = (Request request, Response response) -> {
+    String rpta = "";
+    int usuarioId = Integer.parseInt(request.params(":usuario_id"));
+    int sistemaId = Integer.parseInt(request.params(":sistema_id"));
+    Database db = new Database();
+    try {
+      List<JSONObject> rptaTemp = new ArrayList<JSONObject>();
+      db.open();
+      String sql = 
+        "SELECT T.id AS id, T.nombre AS nombre, (CASE WHEN (P.existe = 1) THEN 1 ELSE 0 END) AS existe, T.llave AS llave FROM "+
+        "(" +
+          "SELECT id, nombre, llave, 0 AS existe FROM permisos WHERE sistema_id = ?" +
+        ") T " +
+        "LEFT JOIN " +
+        "(" +
+          "SELECT P.id, P.nombre,  P.llave, 1 AS existe  FROM permisos P " +
+          "INNER JOIN usuarios_permisos UP ON P.id = UP.permiso_id " +
+          "WHERE UP.usuario_id = ? " +
+          ") P " +
+          "ON T.id = P.id";
+      List<ViewUsuarioPermiso> rptaList = ViewUsuarioPermiso.findBySQL(sql, sistemaId,  usuarioId);
+      for (ViewUsuarioPermiso usuarioPermiso : rptaList) {
+        JSONObject obj = new JSONObject();
+        obj.put("id", usuarioPermiso.get("id"));
+        obj.put("nombre", usuarioPermiso.get("nombre"));
+        obj.put("existe", usuarioPermiso.get("existe"));
+        rptaTemp.add(obj);
+      }
+      rpta = rptaTemp.toString();
+    }catch (Exception e) {
+      String[] error = {"Se ha producido un error en listar los permisos del usuario", e.toString()};
+      JSONObject rptaTry = new JSONObject();
+      rptaTry.put("tipo_mensaje", "error");
+      rptaTry.put("mensaje", error);
+      rpta = rptaTry.toString();
+      response.status(500);
+    } finally {
+      db.close();
+    }
+    return rpta;
+  };
 }
