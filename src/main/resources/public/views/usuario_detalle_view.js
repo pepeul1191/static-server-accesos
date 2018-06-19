@@ -61,7 +61,10 @@ var UsuarioDetalleView = ModalView.extend({
     $.ajax({
       type: "GET",
       url: BASE_URL + "usuario/obtener_usuario_correo/" + viewInstance.get("usuario_id"),
-      data: {csrfmiddlewaretoken: CSRF},
+      data: {},
+      headers: {
+        [CSRF_KEY]: CSRF,
+      },
       async: false,
       success: function(data){
         viewInstance.model = JSON.parse(data);

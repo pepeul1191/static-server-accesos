@@ -27,6 +27,9 @@ var UsuarioRolPermisoView = ModalView.extend({
     $.ajax({
       type: "GET",
       url: BASE_URL + "usuario/sistema/" + usuario_id,
+      headers: {
+        [CSRF_KEY]: CSRF,
+      },
       data: "",
       async: false,
       success: function(data){
