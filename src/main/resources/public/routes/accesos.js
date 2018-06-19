@@ -104,8 +104,11 @@ var accesosRouter = Backbone.Router.extend({
       this.usuarioSistemaView = new UsuarioSistemaView(dataUsuarioSistemaView);
     }
     this.usuarioSistemaView.render();
-    //this.sistemaRolView.usuarioId = usuario_id;
-    //this.usuarioSistemaView.tablaUsuario.listar();
+    this.usuarioSistemaView.tablaSistema.urlListar = 
+    limpiarURL(BASE_URL + "usuario/sistema/" , usuario_id);
+    this.usuarioSistemaView.usuarioId = usuario_id;
+    this.usuarioSistemaView.tablaSistema.listar(usuario_id);
+    this.usuarioSistemaView.tablaSistema.usuarioId = usuario_id;
   },
   usuarioRolPermiso: function(usuario_id){
     if(this.usuarioRolPermisoView == null){

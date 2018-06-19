@@ -8,7 +8,29 @@
         </button>
       </div>
       <div class="modal-body">
-
+        <div class="row">
+          <div class="col-md-5" id="formTableUsuarioSistema">
+            <h6 class="subtitulo" style="margin-bottom:15px">Rols del Sistema</h6>
+            <label class="texto-der" id="mensajeRptaUsuarioSistema"></label>
+            <table class="table table-striped" style="" id="tablaUsuarioSistema">
+              <thead>
+                <tr>
+                  <th style="width: 10px; display:none;">id</th>
+                  <th style="width: 200px;">Nombre</th>
+                  <th style="width: 60px;">Existe</th>
+                  <th style="display:none;">Botones</th>
+                </tr>
+              </thead>
+              <tfoot>
+                <tr>
+                  <td colspan="1000" style="text-align:right">
+                    <button class="btn btn-default guardar-tabla"> <i class="fa fa-check" style="margin-right:5px"></i>Guardar Cambios</button>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
   </div>

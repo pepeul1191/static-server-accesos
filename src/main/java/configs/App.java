@@ -93,6 +93,7 @@ public class App {
 		post("/usuario/guardar_contrasenia", UsuarioHandler.guardarContrasenia);
 		post("/usuario/validar", UsuarioHandler.validar);
 		get("/usuario/sistema/:usuario_id", UsuarioHandler.listarSistemas);
+		post("/usuario/sistema/guardar", UsuarioHandler.guardarSistemas);
   }
 
   public static String renderTemplate(String template, Map model) {

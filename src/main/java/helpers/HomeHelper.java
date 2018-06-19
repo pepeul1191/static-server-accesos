@@ -68,6 +68,7 @@ public class HomeHelper extends ApplicationHelper{
           "data/tabla_sistema_rol_data",
           "data/tabla_rol_permiso_data",
           "data/tabla_usuario_data",
+          "data/tabla_usuario_sistema_data",
           "views/sistema_view",
           "views/sistema_menu_view",
           "views/sistema_permiso_view",

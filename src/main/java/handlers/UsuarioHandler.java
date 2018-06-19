@@ -12,7 +12,8 @@ import models.Usuario;
 import models.Acceso;
 import models.ViewUsuarioCorreoEstado;
 import models.ViewUsuarioSistema;
-import java.sql.Timestamp;;
+import models.UsuarioSistema;
+import java.sql.Timestamp;
 
 public class UsuarioHandler{
   public static Route validar = (Request request, Response response) -> {
@@ -320,4 +321,56 @@ public class UsuarioHandler{
     }
     return rpta;
   };
+
+  public static Route guardarSistemas = (Request request, Response response) -> {
+    String rpta = "";
+    Database db = new Database();
+    try {
+      JSONObject data = new JSONObject(request.queryParams("data"));
+      JSONArray editados = data.getJSONArray("editados");
+      int usuarioId = data.getJSONObject("extra").getInt("usuario_id");
+      db.open();
+      db.getDb().openTransaction();
+      if(editados.length() > 0){
+        for (int i = 0; i < editados.length(); i++) {
+          JSONObject usuarioSistema = editados.getJSONObject(i);
+          int sistemaId = usuarioSistema.getInt("id");
+          int existe = usuarioSistema.getInt("existe");
+          UsuarioSistema e = UsuarioSistema.findFirst("sistema_id = ? AND usuario_id = ?", sistemaId, usuarioId);
+          if (existe == 0){//borrar si existe
+            if(e != null){
+              e.delete();
+            }
+          }else if(existe == 1){//crear si no existe
+            if(e == null){
+              UsuarioSistema n = new UsuarioSistema();
+              n.set("sistema_id", sistemaId);
+              n.set("usuario_id", usuarioId);
+              n.saveIt();
+            }
+          }
+        }
+      }
+      db.getDb().commitTransaction();
+      JSONArray cuerpoMensaje =  new JSONArray();
+      cuerpoMensaje.put("Se ha registrado la asociación de sistemas al usuario");
+      JSONObject rptaMensaje = new JSONObject();
+      rptaMensaje.put("tipo_mensaje", "success");
+      rptaMensaje.put("mensaje", cuerpoMensaje);
+      rpta = rptaMensaje.toString();
+    }catch (Exception e) {
+      e.printStackTrace();
+      String[] cuerpoMensaje = {"Se ha producido un error en asociar los sistemas al usuario", e.toString()};
+      JSONObject rptaMensaje = new JSONObject();
+      rptaMensaje.put("tipo_mensaje", "error");
+      rptaMensaje.put("mensaje", cuerpoMensaje);
+      response.status(500);
+      rpta = rptaMensaje.toString();
+    } finally {
+      if(db.getDb().hasConnection()){
+        db.close();
+      }
+    }
+    return rpta;
+  };  
 }
