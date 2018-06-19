@@ -26,7 +26,7 @@ var dataTablaUsuario = {
       edicion: true,
     },
     filaBotones: {
-      estilos: "width: 80px; padding-left: 7px;"
+      estilos: "width: 80px; padding-left: 4px;"
     },
   },
   tableKeys: ["id", "usuario", "correo"],
@@ -58,12 +58,6 @@ var dataTablaUsuario = {
       clase: "fa-list",
       estilos: "padding-left: 10px;",
       url: BASE_URL + 'accesos/#/usuario/roles_permisos/'/*+ usuario_id*/,
-    },
-    {
-      tipo: "i",
-      claseOperacion: "quitar-fila",
-      clase: "fa-times",
-      estilos: "padding-left: 7px;",
     },
   ],
   collection: new UsuariosCollection(),

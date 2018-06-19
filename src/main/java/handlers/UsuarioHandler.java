@@ -12,6 +12,35 @@ import models.Usuario;
 import models.ViewUsuarioCorreoEstado;;
 
 public class UsuarioHandler{
+  public static Route validar = (Request request, Response response) -> {
+    String rpta = "";
+    Database db = new Database();
+    try {
+      String usuario = request.queryParams("usuario");
+      String contrasenia = request.queryParams("contrasenia");
+      db.open();
+      rpta = Usuario.count("usuario = ? AND contrasenia = ?", usuario) + "";
+      if (rpta.equalsIgnoreCase("1")){
+        //guardar acceso
+        Usuario u = Usuario.findFirst("usuario = ? AND contrasenia = ?", usuario, contrasenia);
+        if(u != null){
+          int usuarioId = u.getInteger("id");
+          
+        }
+      }
+    }catch (Exception e) {
+      String[] error = {"Se ha producido un error en validar al usuario", e.toString()};
+      JSONObject rptaTry = new JSONObject();
+      rptaTry.put("tipo_mensaje", "error");
+      rptaTry.put("mensaje", error);
+      rpta = rptaTry.toString();
+      response.status(500);
+    } finally {
+      db.close();
+    }
+    return rpta;
+  };
+
   public static Route listar = (Request request, Response response) -> {
     String rpta = "";
     Database db = new Database();

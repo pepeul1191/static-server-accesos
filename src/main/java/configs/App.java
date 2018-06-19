@@ -91,6 +91,7 @@ public class App {
 		post("/usuario/correo_repetido", UsuarioHandler.correoRepetido);
 		post("/usuario/guardar_usuario_correo", UsuarioHandler.guardarUsuarioCorreo);
 		post("/usuario/guardar_contrasenia", UsuarioHandler.guardarContrasenia);
+		post("/usuario/validar", UsuarioHandler.validar);
   }
 
   public static String renderTemplate(String template, Map model) {
