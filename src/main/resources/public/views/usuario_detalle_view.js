@@ -32,7 +32,10 @@ var UsuarioDetalleView = ModalView.extend({
     $.ajax({
       type: "GET",
       url: BASE_URL + "estado_usuario/listar",
-      data: {csrfmiddlewaretoken: CSRF},
+      data: {},
+      headers: {
+        [CSRF_KEY]: CSRF,
+      },
       async: false,
       success: function(data){
         responseData = JSON.parse(data);
@@ -81,7 +84,12 @@ var UsuarioDetalleView = ModalView.extend({
      	$.ajax({
      		type: "POST",
      		url: BASE_URL + "usuario/nombre_repetido",
-     		data: {data: JSON.stringify(usuario_temp), csrfmiddlewaretoken: CSRF}, //"data=" + JSON.stringify(usuario_temp),
+     		data: {
+           data: JSON.stringify(usuario_temp)
+        }, //"data=" + JSON.stringify(usuario_temp),
+        headers: {
+					[CSRF_KEY]: CSRF,
+				},
      		async: false,
      		success: function(data){
      			if(data >= 1){
@@ -110,7 +118,12 @@ var UsuarioDetalleView = ModalView.extend({
     $.ajax({
       type: "POST",
       url: BASE_URL + "usuario/contrasenia_repetida",
-      data: "data=" + JSON.stringify(usuario_temp),
+      data: {
+        data:JSON.stringify(usuario_temp),
+      },
+      headers: {
+        [CSRF_KEY]: CSRF,
+      },
       async: false,
       success: function(data){
         if(data == 0){
@@ -152,7 +165,12 @@ var UsuarioDetalleView = ModalView.extend({
     $.ajax({
       type: "POST",
       url: BASE_URL + "usuario/correo_repetido",
-      data: {data: JSON.stringify(usuario_temp), csrfmiddlewaretoken: CSRF}, //"data=" + JSON.stringify(usuario_temp),
+      data: {
+        data: JSON.stringify(usuario_temp)
+      }, //"data=" + JSON.stringify(usuario_temp),
+      headers: {
+        [CSRF_KEY]: CSRF,
+      },
       async: false,
       success: function(data){
         if(data >= 1){
@@ -246,7 +264,12 @@ var UsuarioDetalleView = ModalView.extend({
 			$.ajax({
         type: "POST",
         url: BASE_URL + "usuario/guardar_usuario_correo",
-        data: {usuario : JSON.stringify(this.datosGeneralesToJSON()), csrfmiddlewaretoken: CSRF},
+        data: {
+          usuario : JSON.stringify(this.datosGeneralesToJSON())
+        },
+        headers: {
+					[CSRF_KEY]: CSRF,
+				},
         async: false,
         success: function(data){
           var rpta = JSON.parse(data);
@@ -289,7 +312,12 @@ var UsuarioDetalleView = ModalView.extend({
 			$.ajax({
         type: "POST",
         url: BASE_URL + "usuario/guardar_contrasenia",
-        data: "contrasenia=" + JSON.stringify(this.datosContraseniasToJSON()),
+        data: {
+          contrasenia: JSON.stringify(this.datosContraseniasToJSON())
+        },
+        headers: {
+					[CSRF_KEY]: CSRF,
+				},
         async: false,
         success: function(data){
           var rpta = JSON.parse(data);

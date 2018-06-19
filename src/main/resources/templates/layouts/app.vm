@@ -15,6 +15,7 @@
     var ITEMS_JSON = JSON.parse('$items');
     var DATA = JSON.parse('$data');
     var CSRF = "$constants.getString("application.secret")";
+    var CSRF_KEY = "$constants.getString("application.key")";
   </script>
   $load_css 
 </head>
