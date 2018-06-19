@@ -419,6 +419,58 @@ public class UsuarioHandler{
     return rpta;
   };
 
+  public static Route guardarSistemaRoles = (Request request, Response response) -> {
+    String rpta = "";
+    Database db = new Database();
+    try {
+      JSONObject data = new JSONObject(request.queryParams("data"));
+      JSONArray editados = data.getJSONArray("editados");
+      int usuarioId = data.getJSONObject("extra").getInt("usuario_id");
+      db.open();
+      db.getDb().openTransaction();
+      if(editados.length() > 0){
+        for (int i = 0; i < editados.length(); i++) {
+          JSONObject usuarioRol = editados.getJSONObject(i);
+          int rolId = usuarioRol.getInt("id");
+          int existe = usuarioRol.getInt("existe");
+          UsuarioRol e = UsuarioRol.findFirst("rol_id = ? AND usuario_id = ?", rolId, usuarioId);
+          if (existe == 0){//borrar si existe
+            if(e != null){
+              e.delete();
+            }
+          }else if(existe == 1){//crear si no existe
+            if(e == null){
+              UsuarioRol n = new UsuarioRol();
+              n.set("rol_id", rolId);
+              n.set("usuario_id", usuarioId);
+              n.saveIt();
+            }
+          }
+        }
+      }
+      db.getDb().commitTransaction();
+      JSONArray cuerpoMensaje =  new JSONArray();
+      cuerpoMensaje.put("Se ha registrado la asociación de roles al usuario");
+      JSONObject rptaMensaje = new JSONObject();
+      rptaMensaje.put("tipo_mensaje", "success");
+      rptaMensaje.put("mensaje", cuerpoMensaje);
+      rpta = rptaMensaje.toString();
+    }catch (Exception e) {
+      e.printStackTrace();
+      String[] cuerpoMensaje = {"Se ha producido un error en asociar los roles al usuario", e.toString()};
+      JSONObject rptaMensaje = new JSONObject();
+      rptaMensaje.put("tipo_mensaje", "error");
+      rptaMensaje.put("mensaje", cuerpoMensaje);
+      response.status(500);
+      rpta = rptaMensaje.toString();
+    } finally {
+      if(db.getDb().hasConnection()){
+        db.close();
+      }
+    }
+    return rpta;
+  };  
+
   public static Route listarUsuarioSistemaPermisos = (Request request, Response response) -> {
     String rpta = "";
     int usuarioId = Integer.parseInt(request.params(":usuario_id"));
@@ -461,4 +513,56 @@ public class UsuarioHandler{
     }
     return rpta;
   };
+
+  public static Route guardarSistemaPermisos = (Request request, Response response) -> {
+    String rpta = "";
+    Database db = new Database();
+    try {
+      JSONObject data = new JSONObject(request.queryParams("data"));
+      JSONArray editados = data.getJSONArray("editados");
+      int usuarioId = data.getJSONObject("extra").getInt("usuario_id");
+      db.open();
+      db.getDb().openTransaction();
+      if(editados.length() > 0){
+        for (int i = 0; i < editados.length(); i++) {
+          JSONObject usuarioPermiso = editados.getJSONObject(i);
+          int permisoId = usuarioPermiso.getInt("id");
+          int existe = usuarioPermiso.getInt("existe");
+          UsuarioPermiso e = UsuarioPermiso.findFirst("permiso_id = ? AND usuario_id = ?", permisoId, usuarioId);
+          if (existe == 0){//borrar si existe
+            if(e != null){
+              e.delete();
+            }
+          }else if(existe == 1){//crear si no existe
+            if(e == null){
+              UsuarioPermiso n = new UsuarioPermiso();
+              n.set("permiso_id", permisoId);
+              n.set("usuario_id", usuarioId);
+              n.saveIt();
+            }
+          }
+        }
+      }
+      db.getDb().commitTransaction();
+      JSONArray cuerpoMensaje =  new JSONArray();
+      cuerpoMensaje.put("Se ha registrado la asociación de permisos al usuario");
+      JSONObject rptaMensaje = new JSONObject();
+      rptaMensaje.put("tipo_mensaje", "success");
+      rptaMensaje.put("mensaje", cuerpoMensaje);
+      rpta = rptaMensaje.toString();
+    }catch (Exception e) {
+      e.printStackTrace();
+      String[] cuerpoMensaje = {"Se ha producido un error en asociar los permisos al usuario", e.toString()};
+      JSONObject rptaMensaje = new JSONObject();
+      rptaMensaje.put("tipo_mensaje", "error");
+      rptaMensaje.put("mensaje", cuerpoMensaje);
+      response.status(500);
+      rpta = rptaMensaje.toString();
+    } finally {
+      if(db.getDb().hasConnection()){
+        db.close();
+      }
+    }
+    return rpta;
+  };  
 }

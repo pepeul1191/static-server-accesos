@@ -93,9 +93,11 @@ public class App {
 		post("/usuario/guardar_contrasenia", UsuarioHandler.guardarContrasenia);
 		post("/usuario/validar", UsuarioHandler.validar);
 		get("/usuario/sistema/:usuario_id", UsuarioHandler.listarSistemas);
-		get("/usuario/rol/:sistema_id/:usuario_id", UsuarioHandler.listarUsuarioSistemaRoles);
-		get("/usuario/permiso/:sistema_id/:usuario_id", UsuarioHandler.listarUsuarioSistemaPermisos);
 		post("/usuario/sistema/guardar", UsuarioHandler.guardarSistemas);
+		get("/usuario/rol/:sistema_id/:usuario_id", UsuarioHandler.listarUsuarioSistemaRoles);
+		post("/usuario/rol/guardar", UsuarioHandler.guardarSistemaRoles);
+		get("/usuario/permiso/:sistema_id/:usuario_id", UsuarioHandler.listarUsuarioSistemaPermisos);
+		post("/usuario/permiso/guardar", UsuarioHandler.guardarSistemaPermisos);
   }
 
   public static String renderTemplate(String template, Map model) {
