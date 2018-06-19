@@ -11,6 +11,7 @@ import configs.Database;
 import models.Usuario;
 import models.Acceso;
 import models.ViewUsuarioCorreoEstado;
+import models.ViewUsuarioSistema;
 import java.sql.Timestamp;;
 
 public class UsuarioHandler{
@@ -275,6 +276,47 @@ public class UsuarioHandler{
       if(db.getDb().hasConnection()){
         db.close();
       }
+    }
+    return rpta;
+  };
+
+  public static Route listarSistemas = (Request request, Response response) -> {
+    String rpta = "";
+    int usuarioId = Integer.parseInt(request.params(":usuario_id"));
+    Database db = new Database();
+    try {
+      List<JSONObject> rptaTemp = new ArrayList<JSONObject>();
+      db.open();
+      String sql = 
+        "SELECT T.id AS id, T.nombre AS nombre, (CASE WHEN (P.existe = 1) THEN 1 ELSE 0 END) AS existe FROM " +
+        "(" +
+          "SELECT id, nombre, 0 AS existe FROM sistemas" +
+        ") T " +
+        "LEFT JOIN " +
+        "(" +
+          "SELECT S.id, S.nombre, 1 AS existe FROM sistemas S " +
+          "INNER JOIN usuarios_sistemas US ON US.sistema_id = S.id  " +
+          "WHERE US.usuario_id = ?  " +
+        ") P " +
+        "ON T.id = P.id";
+      List<ViewUsuarioSistema> rptaList = ViewUsuarioSistema.findBySQL(sql, usuarioId);
+      for (ViewUsuarioSistema rolPermiso : rptaList) {
+        JSONObject obj = new JSONObject();
+        obj.put("id", rolPermiso.get("id"));
+        obj.put("nombre", rolPermiso.get("nombre"));
+        obj.put("existe", rolPermiso.get("existe"));
+        rptaTemp.add(obj);
+      }
+      rpta = rptaTemp.toString();
+    }catch (Exception e) {
+      String[] error = {"Se ha producido un error en  listar los sistema del usuario", e.toString()};
+      JSONObject rptaTry = new JSONObject();
+      rptaTry.put("tipo_mensaje", "error");
+      rptaTry.put("mensaje", error);
+      rpta = rptaTry.toString();
+      response.status(500);
+    } finally {
+      db.close();
     }
     return rpta;
   };
