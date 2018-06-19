@@ -9,7 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import configs.Database;
 import models.Usuario;
-import models.ViewUsuarioCorreoEstado;;
+import models.Acceso;
+import models.ViewUsuarioCorreoEstado;
+import java.sql.Timestamp;;
 
 public class UsuarioHandler{
   public static Route validar = (Request request, Response response) -> {
@@ -19,16 +21,22 @@ public class UsuarioHandler{
       String usuario = request.queryParams("usuario");
       String contrasenia = request.queryParams("contrasenia");
       db.open();
-      rpta = Usuario.count("usuario = ? AND contrasenia = ?", usuario) + "";
+      rpta = Usuario.count("usuario = ? AND contrasenia = ?", usuario, contrasenia) + "";
       if (rpta.equalsIgnoreCase("1")){
         //guardar acceso
         Usuario u = Usuario.findFirst("usuario = ? AND contrasenia = ?", usuario, contrasenia);
         if(u != null){
           int usuarioId = u.getInteger("id");
-          
+          Acceso n = new Acceso();
+          java.util.Date utilDate = new java.util.Date();
+          java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+          n.set("momento", sqlDate);
+          n.set("usuario_id", usuarioId);
+          n.saveIt();
         }
       }
     }catch (Exception e) {
+      e.printStackTrace();
       String[] error = {"Se ha producido un error en validar al usuario", e.toString()};
       JSONObject rptaTry = new JSONObject();
       rptaTry.put("tipo_mensaje", "error");
