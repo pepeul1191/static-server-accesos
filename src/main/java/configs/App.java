@@ -24,6 +24,7 @@ import handlers.PermisoHandler;
 import handlers.RolHandler;
 import handlers.UsuarioHandler;
 import handlers.EstadoUsuarioHandler;
+import handlers.ErrorHandler;
 
 public class App {
   public static void main(String args[]){
@@ -79,7 +80,7 @@ public class App {
 		post("/login/acceder", LoginHandler.acceder);
 		get("/login/cerrar", LoginHandler.cerrar);
 		//rutas a error
-		get("/access/error/:error", errorHandler.index);
+		get("/access/error/:error", ErrorHandler.index);
 		//rutas de vista para usar los servicios REST
 		before("/accesos/", FilterHandler.sessionTrue);
 		get("/accesos/", HomeHandler.index);
