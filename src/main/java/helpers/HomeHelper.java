@@ -2,7 +2,7 @@ package helpers;
 
 public class HomeHelper extends ApplicationHelper{
   public String indexCSS() {
-    switch(getConfValue("ambiente")) {
+    switch(getConfValue("ambiente_static")) {
       case "desarrollo":
         return this.loadCSS(new String[] {
           "bower_components/bootstrap/dist/css/bootstrap.min",
@@ -24,7 +24,7 @@ public class HomeHelper extends ApplicationHelper{
   }  
   
   public String indexJS() {
-    switch(getConfValue("ambiente")) {
+    switch(getConfValue("ambiente_static")) {
       case "desarrollo":
         return this.loadJS(new String[] {
           "bower_components/jquery/dist/jquery.min",

@@ -14,8 +14,8 @@
     var MODULOS_JSON = JSON.parse('$modulos');
     var ITEMS_JSON = JSON.parse('$items');
     var DATA = JSON.parse('$data');
-    var CSRF = "$constants.getString("application.secret")";
-    var CSRF_KEY = "$constants.getString("application.key")";
+    var CSRF = "$constants.getString("csrf.secret")";
+    var CSRF_KEY = "$constants.getString("csrf.key")";
   </script>
   $load_css 
 </head>

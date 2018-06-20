@@ -13,6 +13,7 @@ import spark.ModelAndView;
 import spark.template.velocity.*;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
+import configs.FilterHandler;
 import handlers.HomeHandler;
 import handlers.SistemaHandler;
 import handlers.ModuloHandler;
@@ -45,16 +46,10 @@ public class App {
 			}
 			return "OK";
 		});
-		//before filter
-		before((request, response) -> {
-			response.header("Access-Control-Allow-Origin", "*");
-			response.header("Access-Control-Request-Method",  "*");
-			response.header("Access-Control-Allow-Headers",  "*");
-			response.header("Access-Control-Allow-Credentials", "true");
-			response.header("Server",  "Ubuntu, Jetty");
-			// Note: this may or may not be necessary in your particular application
-			//response.type("application/json");
-		});
+		//filters
+		before("*", FilterHandler.setHeaders);
+		before("*", FilterHandler.ambinteLogs);
+		before("/*", FilterHandler.ambienteCSRF);
 		//ruta de test/conexion
 		get("/test/conexion", (request, response) -> {
 			return "Conxión OK";
