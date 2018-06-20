@@ -115,10 +115,7 @@ public class App {
 		get("/usuario/permiso/:sistema_id/:usuario_id", UsuarioHandler.listarUsuarioSistemaPermisos);
 		post("/usuario/permiso/guardar", UsuarioHandler.guardarSistemaPermisos);
 		//errors si no encuentra recurso
-		get("/*", (request, response) -> {
-			response.redirect("/access/error/404");
-			return "";
-		});
+		get("/*", ErrorHandler.errorGET);
 		post("/*", ErrorHandler.errorPOST);
   }
 

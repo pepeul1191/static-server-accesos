@@ -36,6 +36,7 @@ public class ErrorHandler {
         descripcion = "La p&aacutegina que busca no se encuentra en el servidor";
         break;
     }
+    response.status(numeroError);
     Map<String, Object> model = new HashMap<>();
     model.put("partial", "templates/error/index.vm");
     model.put("title", "Error");
@@ -46,6 +47,12 @@ public class ErrorHandler {
     model.put("load_css", helper.indexCSS());
     model.put("load_js", helper.indexJS());
     return App.renderTemplate("templates/layouts/blank.vm", model);
+  };
+
+  public static Route errorGET = (Request request, Response response) -> {
+    //String[] path = request.pathInfo().split(".");
+		response.redirect("/access/error/404");
+		return "";
   };
 
   public static Route errorPOST = (Request request, Response response) -> {
