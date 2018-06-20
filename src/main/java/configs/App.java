@@ -14,6 +14,7 @@ import spark.template.velocity.*;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 import configs.FilterHandler;
+import handlers.LoginHandler;
 import handlers.HomeHandler;
 import handlers.SistemaHandler;
 import handlers.ModuloHandler;
@@ -55,15 +56,23 @@ public class App {
 			return "Conxión OK";
 		});
 		get("/", (request, response) -> {
-			response.status(500);
-			return "Error, URL vacía";
+			//Config constants = ConfigFactory.parseResources("config/application.conf");
+			//constants.getString("base_url") + 
+			response.redirect("login");
+      return "";
 		});
 		get("/accesos", (request, response) -> {
 			response.redirect("/accesos/");
 			return "";
 		});
-		//rutas a handlers
+		//rutas a login
+		before("/login", FilterHandler.sessionFalse);
+		get("/login", LoginHandler.index);
+		post("/login/acceder", LoginHandler.acceder);
+		//rutas de vista para usar los servicios REST
+		before("/accesos/", FilterHandler.sessionTrue);
 		get("/accesos/", HomeHandler.index);
+		//rutas de servicios REST a handlers
 		get("/sistema/listar", SistemaHandler.listar);
 		post("/sistema/guardar", SistemaHandler.guardar);
 		get("/modulo/listar/:sistema_id", ModuloHandler.listar);

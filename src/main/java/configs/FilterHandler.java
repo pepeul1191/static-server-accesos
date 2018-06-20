@@ -29,7 +29,13 @@ public class FilterHandler{
   public static Filter ambienteCSRF = (Request request, Response response) -> {
     Config constants = ConfigFactory.parseResources("configs/application.conf");
     if(constants.getString("ambiente_csrf").equalsIgnoreCase("activo")){
-      if(!request.pathInfo().equalsIgnoreCase("/accesos/") && !request.pathInfo().equalsIgnoreCase("/accesos")){
+      if(
+          !request.pathInfo().equalsIgnoreCase("/accesos/") && 
+          !request.pathInfo().equalsIgnoreCase("/accesos") && 
+          !request.pathInfo().equalsIgnoreCase("/login") && 
+          !request.pathInfo().equalsIgnoreCase("/login/acceder") && 
+          !request.pathInfo().equalsIgnoreCase("/")
+        ){
         String csrfKey = constants.getString("csrf.key");
         String csrfValue = constants.getString("csrf.secret");
         String[] error = new String[2];
@@ -42,7 +48,7 @@ public class FilterHandler{
             continuar = false;
           }
         }catch(NullPointerException e){
-          e.printStackTrace();
+          //e.printStackTrace();
           error[0] = "No se puede acceder al recurso"; 
           error[1] = "CSRF Token key error";
           continuar = false;
@@ -54,6 +60,46 @@ public class FilterHandler{
           String rpta = rptaJSON.toString();
           halt(401, rpta);
         }
+      }
+    }
+  };
+
+  public static Filter sessionTrue = (Request request, Response response) -> {
+    Config constants = ConfigFactory.parseResources("configs/application.conf");
+    if(constants.getString("ambiente_session").equalsIgnoreCase("activo")){
+      boolean error = false;
+      request.session(true);
+      try {
+        Boolean sessionActiva = (Boolean)request.session().attribute("activo");
+        if(sessionActiva == true){
+          error = false;
+        }
+      } catch (java.lang.NullPointerException e) {
+        error = true;
+      }
+      if(error == true){
+        String baseURL = constants.getString("base_url");
+        response.redirect(baseURL + "error/access/505");
+      }
+    }
+  };
+
+  public static Filter sessionFalse = (Request request, Response response) -> {
+    Config constants = ConfigFactory.parseResources("configs/application.conf");
+    if(constants.getString("ambiente_session").equalsIgnoreCase("activo")){
+      boolean error = false;
+      request.session(true);
+      try {
+        Boolean sessionActiva = (Boolean)request.session().attribute("activo");
+        if(sessionActiva == true){
+          error = false;
+        }
+      } catch (java.lang.NullPointerException e) {
+        error = true;
+      }
+      if(error == false){
+        String baseURL = constants.getString("base_url");
+        response.redirect(baseURL + "accesos/");
       }
     }
   };

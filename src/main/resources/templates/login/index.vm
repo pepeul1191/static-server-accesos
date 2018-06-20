@@ -1,10 +1,16 @@
-<div class="wrapper">
-    <form class="form-signin">
-        <h2 class="form-signin-heading" style="text-align:center">Bienvenido</h2>
-        <input type="text" class="form-control" name="username" placeholder="Usuario" required="" autofocus="" />
-        <input type="password" class="form-control" name="password" placeholder="Contrasenia" required=""/>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Acceder</button>
-        <br>
-         <p class="small">Aplicación Desarrollada por Software Web Perú - <a href="http://softweb.pe/website">Ir</a></p>
+<div class="login-page">
+  <div class="form">
+    <i class="fa fa-universal-access" aria-hidden="true" id="logo-brand"></i>
+    <form class="login-form" action="$constants.getString("base_url")login/acceder" method="post">
+      <input type="text" name="usuario" placeholder="usuario"/>
+      <input type="password" name="contrasenia" placeholder="contrasenia"/>
+      <input type="hidden" name="$constants.getString("csrf.key")" value="$constants.getString("csrf.secret")"/>
+      <button>login</button>
+      <p class="mensaje-error">$mensaje</p>
+      <p class="message">No está registrado? <a href="#">Crear cuenta</a></p>
     </form>
+  </div>
 </div>
+<footer>
+<p>Powered by: <a href="http://softweb.pe/">Software Web Perú</a> © 2011-2018 </p>
+</footer>
