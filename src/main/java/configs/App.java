@@ -114,6 +114,12 @@ public class App {
 		post("/usuario/rol/guardar", UsuarioHandler.guardarSistemaRoles);
 		get("/usuario/permiso/:sistema_id/:usuario_id", UsuarioHandler.listarUsuarioSistemaPermisos);
 		post("/usuario/permiso/guardar", UsuarioHandler.guardarSistemaPermisos);
+		//errors si no encuentra recurso
+		get("/*", (request, response) -> {
+			response.redirect("/access/error/404");
+			return "";
+		});
+		post("/*", ErrorHandler.errorPOST);
   }
 
   public static String renderTemplate(String template, Map model) {
