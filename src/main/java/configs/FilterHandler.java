@@ -29,38 +29,30 @@ public class FilterHandler{
   public static Filter ambienteCSRF = (Request request, Response response) -> {
     Config constants = ConfigFactory.parseResources("configs/application.conf");
     if(constants.getString("ambiente_csrf").equalsIgnoreCase("activo")){
-      if(
-          !request.pathInfo().equalsIgnoreCase("/accesos/") && 
-          !request.pathInfo().equalsIgnoreCase("/accesos") && 
-          !request.pathInfo().equalsIgnoreCase("/login") && 
-          !request.pathInfo().equalsIgnoreCase("/login/acceder") && 
-          !request.pathInfo().equalsIgnoreCase("/")
-        ){
-        String csrfKey = constants.getString("csrf.key");
-        String csrfValue = constants.getString("csrf.secret");
-        String[] error = new String[2];
-        boolean continuar = true;
-        try{
-          String csrfRequestValue = request.headers(csrfKey);
-          if(!csrfRequestValue.equalsIgnoreCase(csrfValue) ){
-            error[0] = "No se puede acceder al recurso"; 
-            error[1] = "CSRF Token error";
-            continuar = false;
-          }
-        }catch(NullPointerException e){
-          //e.printStackTrace();
+      String csrfKey = constants.getString("csrf.key");
+      String csrfValue = constants.getString("csrf.secret");
+      String[] error = new String[2];
+      boolean continuar = true;
+      try{
+        String csrfRequestValue = request.headers(csrfKey);
+        if(!csrfRequestValue.equalsIgnoreCase(csrfValue) ){
           error[0] = "No se puede acceder al recurso"; 
-          error[1] = "CSRF Token key error";
+          error[1] = "CSRF Token error";
           continuar = false;
         }
-        if(continuar == false){
-          JSONObject rptaJSON = new JSONObject();
-          rptaJSON.put("tipo_mensaje", "error");
-          rptaJSON.put("mensaje", error);
-          String rpta = rptaJSON.toString();
-          halt(401, rpta);
-        }
+      }catch(NullPointerException e){
+        //e.printStackTrace();
+        error[0] = "No se puede acceder al recurso"; 
+        error[1] = "CSRF Token key error";
+        continuar = false;
       }
+      if(continuar == false){
+        JSONObject rptaJSON = new JSONObject();
+        rptaJSON.put("tipo_mensaje", "error");
+        rptaJSON.put("mensaje", error);
+        String rpta = rptaJSON.toString();
+        halt(401, rpta);
+      }      
     }
   };
 
@@ -79,7 +71,7 @@ public class FilterHandler{
       }
       if(error == true){
         String baseURL = constants.getString("base_url");
-        response.redirect(baseURL + "error/access/505");
+        response.redirect(baseURL + "access/error/505");
       }
     }
   };

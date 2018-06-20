@@ -72,4 +72,16 @@ public class LoginHandler {
       return App.renderTemplate("templates/layouts/blank.vm", model);
     }
   };
+
+  public static Route cerrar = (Request request, Response response) -> {
+    try{
+      request.session().removeAttribute("activo");
+    }catch(NullPointerException e){
+      //e.printStackTrace();
+    }
+    Config constants = ConfigFactory.parseResources("configs/application.conf");
+    String baseURL = constants.getString("base_url");
+    response.redirect(baseURL + "login");
+    return "";
+  };
 }

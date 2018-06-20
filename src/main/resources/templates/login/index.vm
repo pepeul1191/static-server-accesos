@@ -7,10 +7,16 @@
       <input type="hidden" name="$constants.getString("csrf.key")" value="$constants.getString("csrf.secret")"/>
       <button>login</button>
       <p class="mensaje-error">$mensaje</p>
-      <p class="message">No está registrado? <a href="#">Crear cuenta</a></p>
+      <p class="message">No está registrado? <a href="#" onclick="crearCuenta()">Crear cuenta</a></p>
     </form>
   </div>
 </div>
 <footer>
 <p>Powered by: <a href="http://softweb.pe/">Software Web Perú</a> © 2011-2018 </p>
 </footer>
+
+<script type="text/javascript">
+  function crearCuenta() {
+    alert("Operación no disponible");
+  }
+</script>

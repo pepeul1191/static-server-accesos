@@ -50,7 +50,15 @@ public class App {
 		//filters
 		before("*", FilterHandler.setHeaders);
 		before("*", FilterHandler.ambinteLogs);
-		before("/*", FilterHandler.ambienteCSRF);
+		before("/sistema/*", FilterHandler.ambienteCSRF);
+		before("/item/*", FilterHandler.ambienteCSRF);
+		before("/modulo/*", FilterHandler.ambienteCSRF);
+		before("/subtitulo/*", FilterHandler.ambienteCSRF);
+		before("/item/*", FilterHandler.ambienteCSRF);
+		before("/permiso/*", FilterHandler.ambienteCSRF);
+		before("/rol/*", FilterHandler.ambienteCSRF);
+		before("/estado_usuario/*", FilterHandler.ambienteCSRF);
+		before("/usuario/*", FilterHandler.ambienteCSRF);
 		//ruta de test/conexion
 		get("/test/conexion", (request, response) -> {
 			return "Conxión OK";
@@ -69,6 +77,9 @@ public class App {
 		before("/login", FilterHandler.sessionFalse);
 		get("/login", LoginHandler.index);
 		post("/login/acceder", LoginHandler.acceder);
+		get("/login/cerrar", LoginHandler.cerrar);
+		//rutas a error
+		get("/access/error/:error", errorHandler.index);
 		//rutas de vista para usar los servicios REST
 		before("/accesos/", FilterHandler.sessionTrue);
 		get("/accesos/", HomeHandler.index);
