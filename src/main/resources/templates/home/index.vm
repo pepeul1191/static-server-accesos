@@ -1,2 +1,0 @@
-Hola Mundo<br>
-base_url : $constants.getString("base_url")
