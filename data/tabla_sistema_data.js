@@ -12,7 +12,7 @@ var dataTablaSistema = {
   fila: {
     id: { // llave de REST
       tipo: "td_id",
-      estilos: "color: blue; display:none",
+      estilos: "",
       edicion: false,
     },
     nombre: { // llave de REST
